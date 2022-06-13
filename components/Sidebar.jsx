@@ -1,0 +1,56 @@
+import React from "react";
+import { menuIcons } from "../lib/data";
+import Icon from "./Icon";
+import { BsTwitter } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
+import { MdOutlineMoreHoriz } from "react-icons/md";
+import {FaLock} from "react-icons/fa"
+const Sidebar = () => {
+  return (
+    <section className="fixed bottom-0 sm:relative  bg-black  w-full sm:flex-[0.15] lg:pl-[4rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
+      <div className="sticky top-0 items-end sm:h-[100vh] overflow-y-scroll no-scrollbar lg:items-start justify-between  gap-6  ">
+        <div className="">
+          <button className="hidden sm:block hover:bg-zinc-900 ml-1 mb-3 rounded-full p-2">
+            <BsTwitter size="1.7rem" className="" />
+          </button>
+          <div className="flex sm:block justify-between">
+            {menuIcons.map((data, i) => (
+              <Icon key={i} data={data} />
+            ))}
+            <button
+              className={`flex sm:hidden gap-4 cursor-pointer rounded-full text-white  hover:bg-zinc-900 w-auto  justify-start items-center px-3 py-[0.7rem] text-[1.2rem]`}
+            >
+              <div className="text-[1.7rem] font-thin">
+                <BsSearch />
+              </div>
+            </button>
+          </div>
+          <button className="hidden sm:block sm:h-[2.5rem] sm:w-[2.5rem] md:h-auto md:w-[90%] sm:text-[0.7rem]  bg-sky-600 hover:bg-sky-700 mt-3 w-[100%] rounded-full py-3 font-bold md:text-md lg:text-lg">
+            Tweet
+          </button>
+        </div>
+
+        <div className="hidden sm:block mt-8 ">
+          <button className="w-full h-[4rem] flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3">
+            <img
+              className="h-[2.3rem] w-[2.5rem] object-cover rounded-full"
+              src="https://img.freepik.com/free-photo/happiness-wellbeing-confidence-concept-cheerful-attractive-african-american-woman-curly-haircut-cross-arms-chest-self-assured-powerful-pose-smiling-determined-wear-yellow-sweater_176420-35063.jpg?w=2000"
+              alt=""
+            />
+            <div className="hidden lg:flex flex-col text-left truncate ">
+              <div className="flex items-center">
+                <h5 className="font-bold text-ellipsis overflow-hidden">
+                  Siska Apriana Rifianti
+                </h5>
+                <FaLock/>
+              </div>
+              <p className="font-thin text-sm text-gray-400">@SiskaRifianti</p>
+            </div>
+            <MdOutlineMoreHoriz size="1.4rem" className="hidden lg:block" />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+export default Sidebar;
