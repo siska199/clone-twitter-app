@@ -3,8 +3,8 @@ import { dataTrends } from "../lib/data";
 import { BsThreeDots } from "react-icons/bs";
 const Trends = () => {
   return (
-    <section className=" w-full px-10 mt-5">
-      <div className="bg-zinc-800 rounded-xl pt-5 flex flex-col">
+    <section className="px-10 mt-[5rem]">
+      <div className="bg-zinc-800 w-[22rem]  rounded-xl pt-5 flex flex-col">
         <h1 className="px-5 mb-2 text-[1.3rem] font-bold">Trends For You</h1>
         {dataTrends.map((data, i) => (
           <div

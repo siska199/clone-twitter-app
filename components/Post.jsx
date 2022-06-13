@@ -34,7 +34,7 @@ const Post = ({ data }) => {
     },
   ];
   return (
-    <section className="flex p-4 gap-3 md:w-full border-2">
+    <section className="flex p-4 gap-3 md:w-full ">
       <img
         className="md:h-[3rem] md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
         src={data.profilePict}

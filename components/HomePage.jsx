@@ -4,16 +4,30 @@ import Sidebar from "./Sidebar";
 import Feeds from "./Feeds";
 import Search from "./Search";
 import Trends from "./Trends";
-import WhoToFollow from "./WhoToFollow"
+import WhoToFollow from "./WhoToFollow";
+import { dataFooter } from "../lib/data";
+
 const HomePage = () => {
+
   return (
     <Layout title="hompage" customeStyle="flex ">
       <Sidebar />
       <Feeds />
-      <div className="hidden lg:flex w-full flex-col gap-5 ">
+      <div className="hidden lg:block w-full gap-5 h-full sticky ">
         <Search />
         <Trends />
-        <WhoToFollow/>
+        <WhoToFollow />
+        <p className="pl-14 pr-10 leading-2  text-[0.8rem] font-thin my-5  text-gray-400">
+          {
+            dataFooter.map((data,i)=>(
+              <span key={i} className="mr-2 hover:underline cursor-pointer">
+                {data}
+              </span>
+            ))
+          }
+          <br /> 
+          © 2022 Twitter, Inc.
+        </p>
       </div>
     </Layout>
   );

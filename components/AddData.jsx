@@ -1,7 +1,7 @@
 import React from "react";
 import { iconInputs } from "../lib/data";
 
-const AddPost = () => {
+const AddData = ({type}) => {
   return (
     <form className="px-6 py-3 flex gap-4 border-b-[0.005rem] border-gray-500 w-full">
       <img
@@ -34,4 +34,4 @@ const AddPost = () => {
     </form>
   );
 };
-export default AddPost;
+export default AddData;
