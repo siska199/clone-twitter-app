@@ -8,7 +8,9 @@ const Layout = ({ children, title,customeStyle}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`bg-black `}>
-        <article className={`container ${customeStyle}`}>{children}</article>
+        <article className={`container ${customeStyle}`}>
+          {children}
+          </article>
       </main>
     </>
   );

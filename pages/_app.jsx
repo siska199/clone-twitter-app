@@ -3,16 +3,14 @@ import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
-import store from "../redux/store"
+import store from "../redux/store";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  TimeAgo.addDefaultLocale(en);
-
+  TimeAgo.setDefaultLocale(en.locale);
+  TimeAgo.addLocale(en);
   return (
     <SessionProvider session={session}>
-      <Provider store={store}>
-        <Component {...pageProps} />
-      </Provider>
+      <Component {...pageProps} />
     </SessionProvider>
   );
 }

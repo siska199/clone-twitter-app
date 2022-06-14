@@ -1,5 +1,5 @@
 import React from "react";
-import ReactTimeAgo from "react-time-ago";
+// import ReactTimeAgo from "react-time-ago";
 import { BsDot } from "react-icons/bs";
 import { TbDots } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
@@ -50,7 +50,7 @@ const Post = ({ data }) => {
             @{data.username}
             <BsDot />
             <span className="text-sm text-ellipsis overflow-hidden">
-              {<ReactTimeAgo date={data.createdAt} />}
+              {/* {<ReactTimeAgo date={data.createdAt} />} */}
             </span>
           </p>
           <span className="hover:bg-gray-900 ml-auto p-1 rounded-full">

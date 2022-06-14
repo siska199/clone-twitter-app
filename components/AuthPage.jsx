@@ -2,8 +2,14 @@ import React from "react";
 import Layout from "../layout/Layout";
 import { BsTwitter } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+
 const AuthPage = ({ providers }) => {
-  console.log("providers: ", providers);
+  console.log("providers Auth: ", providers);
+  const handleSignIn = (e,id) => {
+    e.preventDefault();
+    signIn(id);
+  };
   return (
     <Layout title="login" customeStyle="grid grid-cols-2">
       <section className="hidden md:block ">
@@ -34,7 +40,8 @@ const AuthPage = ({ providers }) => {
             </div>
             {Object.values(providers).map((provider) => (
               <button
-                key={provider.id}
+                onClick={(e) => handleSignIn(e, provider.id)}
+                key={provider.name}
                 className="bg-gray-200 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
               >
                 <FcGoogle className="mr-3" />
@@ -42,13 +49,19 @@ const AuthPage = ({ providers }) => {
               </button>
             ))}
             <p className="text-gray-400 text-[0.6rem] leading-3">
-              By signing up, you agree to the <span className="text-sky-400"> Terms of Service</span> and <span className="text-sky-400">Privacy
-              Policy,</span> <span  className="text-sky-400">including Cookie Use</span>.
+              By signing up, you agree to the{" "}
+              <span className="text-sky-400"> Terms of Service</span> and{" "}
+              <span className="text-sky-400">Privacy Policy,</span>{" "}
+              <span className="text-sky-400">including Cookie Use</span>.
             </p>
           </div>
           <div className="flex flex-col w-[60%] lg:w-[40%] mt-[3rem]">
-            <h5 className="font-medium mb-3 text-medium">Already have account</h5>
-            <button className="border-[0.05rem] rounded-3xl py-[0.5rem] font-medium text-sm text-sky-500 hover:bg-gray-800">Sign In</button>
+            <h5 className="font-medium mb-3 text-medium">
+              Already have account
+            </h5>
+            <button className="border-[0.05rem] rounded-3xl py-[0.5rem] font-medium text-sm text-sky-500 hover:bg-gray-800">
+              Sign In
+            </button>
           </div>
         </form>
       </section>

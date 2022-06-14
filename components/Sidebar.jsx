@@ -4,7 +4,8 @@ import Icon from "./Icon";
 import { BsTwitter } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineMoreHoriz } from "react-icons/md";
-import {FaLock} from "react-icons/fa"
+import { FaLock } from "react-icons/fa";
+import { signOut } from "next-auth/react";
 const Sidebar = () => {
   return (
     <section className="fixed bottom-0 sm:relative  bg-black  w-full sm:flex-[0.15] lg:pl-[4rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
@@ -31,7 +32,10 @@ const Sidebar = () => {
         </div>
 
         <div className="hidden sm:block mt-8 ">
-          <button className="w-full h-[4rem] flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3">
+          <button
+            onClick={() => signOut()}
+            className="w-full h-[4rem] flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3"
+          >
             <img
               className="h-[2.3rem] w-[2.5rem] object-cover rounded-full"
               src="https://img.freepik.com/free-photo/happiness-wellbeing-confidence-concept-cheerful-attractive-african-american-woman-curly-haircut-cross-arms-chest-self-assured-powerful-pose-smiling-determined-wear-yellow-sweater_176420-35063.jpg?w=2000"
@@ -42,7 +46,7 @@ const Sidebar = () => {
                 <h5 className="font-bold text-ellipsis overflow-hidden">
                   Siska Apriana Rifianti
                 </h5>
-                <FaLock/>
+                <FaLock />
               </div>
               <p className="font-thin text-sm text-gray-400">@SiskaRifianti</p>
             </div>

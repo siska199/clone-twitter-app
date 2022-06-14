@@ -1,6 +1,7 @@
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-// import TwitterProvider from "next-auth/providers/twitter";
+import clientPromise from "../../../lib/dbConnection";
 
 export default NextAuth({
   providers: [
@@ -8,9 +9,15 @@ export default NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    // TwitterProvider({
-    //   clientId: process.env.TWITTER_CLIENT_ID,
-    //   clientSecret: process.env.TWITTER_CLIENT_SECRET,
-    // }),
   ],
+  secret: process.env.JWT_SECRET,
+  adapter: MongoDBAdapter(clientPromise),
+  pages: {
+    signIn: "/",
+    signOut: "/",
+  },
+  session: {
+    strategy: "jwt",
+  },
+  debug:true
 });
