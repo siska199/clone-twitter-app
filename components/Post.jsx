@@ -34,13 +34,13 @@ const Post = ({ data }) => {
     },
   ];
   return (
-    <section className="flex p-4 gap-3 md:w-full ">
+    <section className="flex px-4 py-4 gap-3 w-full">
       <img
         className="md:h-[3rem] md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
         src={data.profilePict}
         alt=""
       />
-      <div className="w-[80%] md:w-full">
+      <div className="flex flex-col">
         <div className="flex gap-2 items-center tracking truncate">
           <h1 className=" md:text-lg text-md font-semibold text-ellipsis overflow-hidden">
             {data.name}
@@ -57,7 +57,7 @@ const Post = ({ data }) => {
             <TbDots className=" text-lg hover:text-sky-600 cursor-pointer " />
           </span>
         </div>
-        <p className="md:text-[0.95rem] text-sm md:leading-[1.2rem] font-thin text-justify">
+        <p className="break-words md:text-[0.95rem] text-sm md:leading-[1.2rem] font-thin text-justify">
           {data.tweet}
         </p>
         <div className="mt-3">

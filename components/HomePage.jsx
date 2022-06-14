@@ -13,7 +13,7 @@ const HomePage = () => {
     <Layout title="hompage" customeStyle="flex ">
       <Sidebar />
       <Feeds />
-      <div className="hidden lg:block w-full gap-5 h-full sticky ">
+      <div className="hidden lg:flex flex-[0.3] flex-col w-full gap-5 ">
         <Search />
         <Trends />
         <WhoToFollow />
