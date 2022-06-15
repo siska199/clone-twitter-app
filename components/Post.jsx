@@ -1,5 +1,5 @@
 import React from "react";
-// import ReactTimeAgo from "react-time-ago";
+import ReactTimeAgo from "react-time-ago";
 import { BsDot } from "react-icons/bs";
 import { TbDots } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
@@ -40,9 +40,9 @@ const Post = ({ data }) => {
         src={data.profilePict}
         alt=""
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col md:w-full ">
         <div className="flex gap-2 items-center tracking truncate">
-          <h1 className=" md:text-lg text-md font-semibold text-ellipsis overflow-hidden">
+          <h1 className=" md:text-lg text-md  font-semibold text-ellipsis overflow-hidden">
             {data.name}
           </h1>
 
@@ -50,24 +50,27 @@ const Post = ({ data }) => {
             @{data.username}
             <BsDot />
             <span className="text-sm text-ellipsis overflow-hidden">
-              {/* {<ReactTimeAgo date={data.createdAt} />} */}
+              {<ReactTimeAgo date={data.createdAt} />}
             </span>
           </p>
           <span className="hover:bg-gray-900 ml-auto p-1 rounded-full">
             <TbDots className=" text-lg hover:text-sky-600 cursor-pointer " />
           </span>
         </div>
-        <p className="break-words md:text-[0.95rem] text-sm md:leading-[1.2rem] font-thin text-justify">
+
+        <p className="md:text-[0.95rem] text-sm md:leading-[1.2rem] font-thin text-justify">
           {data.tweet}
         </p>
-        <div className="mt-3">
+
+        <div className="flex mt-3">
           <img
             className="max-h-[25rem] object-cover rounded-3xl border-[0.05rem] border-gray-500"
             src={data.picture}
             alt=""
           />
         </div>
-        <div className="flex gap-20 mt-5">
+
+        <div className="flex justify-between mt-5">
           {Icons.map((data, i) => (
             <div
               key={i}

@@ -26,7 +26,7 @@ const Sidebar = () => {
               </div>
             </button>
           </div>
-          <button className="hidden sm:block sm:h-[2.5rem] sm:w-[2.5rem] md:h-auto md:w-[90%] sm:text-[0.7rem]  bg-sky-600 hover:bg-sky-700 mt-3 w-[100%] rounded-full py-3 font-bold md:text-md lg:text-lg">
+          <button className="hidden sm:block sm:h-[2.5rem] sm:w-[2.5rem] md:h-auto lg:w-[90%] sm:text-[0.7rem]  bg-sky-600 hover:bg-sky-700 mt-3 w-[100%] rounded-full py-3 font-bold md:text-md lg:text-lg">
             Tweet
           </button>
         </div>
