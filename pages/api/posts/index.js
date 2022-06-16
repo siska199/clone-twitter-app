@@ -1,5 +1,5 @@
-import posts from "../../model/posts";
-import dbConnection from "../../lib/dbConnection";
+import posts from "../../../model/posts";
+import dbConnection from "../../../lib/dbConnection";
 
 export default async function handler(req, res) {
   await dbConnection();

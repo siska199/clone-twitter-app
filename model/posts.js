@@ -3,6 +3,7 @@ import { Schema, model, models, SchemaTypes } from "mongoose";
 const likeSchema = new Schema({
   idUser: {
     type: SchemaTypes.ObjectId,
+    ref : 'users'
   },
   like: {
     type: Boolean,
@@ -11,6 +12,7 @@ const likeSchema = new Schema({
 const commentSchema = new Schema({
   idUser: {
     type: SchemaTypes.ObjectId,
+    ref: 'users'
   },
   comment: {
     type: String,

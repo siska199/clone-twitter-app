@@ -1,15 +1,25 @@
 import React from "react";
 import Layout from "../layout/Layout";
+import SignUp from "./SignUp";
 import { BsTwitter } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
+import { useSelector, useDispatch } from "react-redux";
+import { handleModalSignUp } from "../redux/features/userSlice";
 
-const AuthPage = ({ providers }) => {
-  console.log("providers Auth: ", providers);
-  const handleSignIn = (e,id) => {
+const AuthPage = ({ providers }) => {  
+  const dispatch = useDispatch();
+  const modalSignUp = useSelector((state) => state.user.value.modalSignUp);
+
+  const handleSignIn = (e, id) => {
     e.preventDefault();
     signIn(id);
   };
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    dispatch(handleModalSignUp(!modalSignUp));
+  };
+
   return (
     <Layout title="login" customeStyle="grid grid-cols-2">
       <section className="hidden md:block ">
@@ -32,8 +42,11 @@ const AuthPage = ({ providers }) => {
             Join Twitter Today
           </h5>
           <div className="flex flex-col space-y-3 text-black w-[60%] lg:w-[40%]  text-sm ">
-            <button className="bg-sky-600 rounded-3xl py-[0.5rem] font-medium text-white hover:bg-sky-500">
-              Sign in with phone or email
+            <button
+              onClick={(e) => handleSignUp(e)}
+              className="bg-sky-600 rounded-3xl py-[0.5rem] font-medium text-white hover:bg-sky-500"
+            >
+              Sign Up with phone or email
             </button>
             <div className="text-center">
               <p className="line relative text-white ">OR</p>
@@ -45,7 +58,7 @@ const AuthPage = ({ providers }) => {
                 className="bg-gray-200 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
               >
                 <FcGoogle className="mr-3" />
-                Sign in with {provider.name}
+                Sign Up with {provider.name}
               </button>
             ))}
             <p className="text-gray-400 text-[0.6rem] leading-3">
@@ -65,6 +78,7 @@ const AuthPage = ({ providers }) => {
           </div>
         </form>
       </section>
+      {modalSignUp && <SignUp />}
     </Layout>
   );
 };
