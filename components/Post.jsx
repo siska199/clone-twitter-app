@@ -34,13 +34,13 @@ const Post = ({ data }) => {
     },
   ];
   return (
-    <section className="flex px-4 py-4 gap-3 w-full">
+    <section className="flex py-4 gap-3 w-full">
       <img
-        className="md:h-[3rem] md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
+        className="md:h-[3rem] ml-6 md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
         src={data.profilePict}
         alt=""
       />
-      <div className="flex flex-col md:w-full ">
+      <div className="flex flex-col w-[80%] ">
         <div className="flex gap-2 items-center tracking truncate">
           <h1 className=" md:text-lg text-md  font-semibold text-ellipsis overflow-hidden">
             {data.name}

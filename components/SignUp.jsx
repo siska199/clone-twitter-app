@@ -9,13 +9,14 @@ import { dataDays, dataMonths, dataYears } from "../lib/data";
 const SignUp = () => {
   const dispatch = useDispatch();
   const modalSignUp = useSelector((state) => state.user.value.modalSignUp);
-  const [form, setForm] = useState({
+  const initialStateForm = {
     name: "",
     email: "",
     month: "",
     day: "",
     year: "",
-  });
+  }
+  const [form, setForm] = useState(initialStateForm);
   const handleOnChange = (e) => {
     setForm({
       ...form,
@@ -29,7 +30,6 @@ const SignUp = () => {
       email: form.email,
       birthDate: `${form.month} ${form.day} ${form.year}`,
     };
-    console.log("form: ", dataSended);
   };
   const handleCloseModal = () => {
     dispatch(handleModalSignUp(!modalSignUp));

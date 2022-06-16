@@ -8,8 +8,8 @@ import { FaLock } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 const Sidebar = () => {
   return (
-    <section className="fixed bottom-0 sm:relative  bg-black  w-full sm:flex-[0.15] lg:pl-[4rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
-      <div className="sticky top-0 items-end sm:h-[100vh] overflow-y-scroll no-scrollbar lg:items-start justify-between  gap-6  ">
+    <section className="fixed bottom-0 sm:relative  bg-black  w-full sm:flex-[0.05] lg:pl-[4rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
+      <div className="sticky top-0  sm:h-[100vh] overflow-y-scroll no-scrollbar lg:items-start justify-between  gap-6  ">
         <div className="">
           <button className="hidden sm:block hover:bg-zinc-900 ml-1 mb-3 rounded-full p-2">
             <BsTwitter size="1.7rem" className="" />
@@ -19,7 +19,7 @@ const Sidebar = () => {
               <Icon key={i} data={data} />
             ))}
             <button
-              className={`flex sm:hidden gap-4 cursor-pointer rounded-full text-white  hover:bg-zinc-900 w-auto  justify-start items-center px-3 py-[0.7rem] text-[1.2rem]`}
+              className={`flex sm:hidden gap-4  cursor-pointer rounded-full text-white  hover:bg-zinc-900 w-auto  justify-start items-center px-3 py-[0.7rem] text-[1.2rem]`}
             >
               <div className="text-[1.7rem] font-thin">
                 <BsSearch />
@@ -34,7 +34,7 @@ const Sidebar = () => {
         <div className="hidden sm:block mt-8 ">
           <button
             onClick={() => signOut()}
-            className="w-full h-[4rem] flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3"
+            className="lg:w-full lg:h-[4rem] flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3"
           >
             <img
               className="h-[2.3rem] w-[2.5rem] object-cover rounded-full"

@@ -1,23 +1,29 @@
 import React from "react";
 import Layout from "../layout/Layout";
 import SignUp from "./SignUp";
+import SignIn from "./SignIn";
+
 import { BsTwitter } from "react-icons/bs";
 import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
-import { handleModalSignUp } from "../redux/features/userSlice";
+import {
+  handleModalSignUp,
+  handleModalSignIn,
+} from "../redux/features/userSlice";
 
-const AuthPage = ({ providers }) => {  
+const AuthPage = ({ providers }) => {
   const dispatch = useDispatch();
   const modalSignUp = useSelector((state) => state.user.value.modalSignUp);
+  const modalSignIn = useSelector((state) => state.user.value.modalSignIn);
 
-  const handleSignIn = (e, id) => {
+  const handleSignIn = (e) => {
     e.preventDefault();
-    signIn(id);
+    dispatch(handleModalSignIn(!modalSignIn));
   };
-  const handleSignUp = (e) => {
+  const handleSignUp = (e, id) => {
     e.preventDefault();
-    dispatch(handleModalSignUp(!modalSignUp));
+    id ? signIn(id) : dispatch(handleModalSignUp(!modalSignUp));
   };
 
   return (
@@ -53,7 +59,7 @@ const AuthPage = ({ providers }) => {
             </div>
             {Object.values(providers).map((provider) => (
               <button
-                onClick={(e) => handleSignIn(e, provider.id)}
+                onClick={(e) => handleSignUp(e, provider.id)}
                 key={provider.name}
                 className="bg-gray-200 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
               >
@@ -72,13 +78,17 @@ const AuthPage = ({ providers }) => {
             <h5 className="font-medium mb-3 text-medium">
               Already have account
             </h5>
-            <button className="border-[0.05rem] rounded-3xl py-[0.5rem] font-medium text-sm text-sky-500 hover:bg-gray-800">
+            <button
+              onClick={(e) => handleSignIn(e)}
+              className="border-[0.05rem] rounded-3xl py-[0.5rem] font-medium text-sm text-sky-500 hover:bg-gray-800"
+            >
               Sign In
             </button>
           </div>
         </form>
       </section>
       {modalSignUp && <SignUp />}
+      {modalSignIn && <SignIn providers={providers} />}
     </Layout>
   );
 };

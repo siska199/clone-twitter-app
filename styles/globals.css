@@ -5,7 +5,7 @@
 .line:after {
     content: '';
     width: 45%;
-    border-bottom: solid 1px #dbdbdb;
+    border-bottom: solid 0.1px gray;
     position: absolute;
     left: 0;
     top: 50%;
@@ -14,7 +14,7 @@
 .line:before {
     content: '';
     width: 45%;
-    border-bottom: solid 1px #dbdbdb;
+    border-bottom: solid 0.1px gray;
     position: absolute;
     right: 0;
     top: 50%;
