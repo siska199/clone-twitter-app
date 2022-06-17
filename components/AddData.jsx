@@ -5,22 +5,37 @@ import { AiOutlineClose } from "react-icons/ai";
 const AddData = ({ type }) => {
   const imgRef = useRef(null);
   const [urlFile, setUrlFile] = useState(null);
+  const [form, setForm] = useState({
+    tweet: "",
+    imagePost: null,
+  });
 
   const handleOnchange = (e) => {
-    console.log(e.target.files[0]);
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = (readerEvent) => {
-      setUrlFile(readerEvent);
-    };
+    console.log("set");
+    if (e.target.name == "imagePost" && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (readerEvent) => {
+        setUrlFile(readerEvent.target.result);
+      };
+    }
+    setForm({
+      ...form,
+      [e.target.name]:
+        e.target.name == "imagePost" ? e.target.files : e.target.value,
+    });
   };
 
   const handleClickIcon = (name) => {
     if (name == "picture") return imgRef.current.click();
   };
-
-  const src =
-    "https://i.pinimg.com/564x/39/8d/c1/398dc1d03dbabc1ffd2871e0ea8ee867.jpg";
+  const handleCloseImage = () => {
+    setUrlFile(null);
+    setForm({
+      ...form,
+      imagePost: null,
+    });
+  };
   return (
     <form className="px-6 py-3 flex gap-4 border-b-[0.005rem] border-gray-500 w-full">
       <img
@@ -37,9 +52,9 @@ const AddData = ({ type }) => {
           ></textarea>
           {urlFile && (
             <div className="relative">
-              <div className="absolute cursor-pointer top-2 left-2 text-lg bg-black/40 hover:bg-black/60 backdrop-blur-lg p-3 rounded-full">
-                <AiOutlineClose />
-              </div>
+              <span className="absolute cursor-pointer top-2 left-2 text-lg bg-black/40 hover:bg-black/60 backdrop-blur-lg p-3 rounded-full">
+                <AiOutlineClose onClick={() => handleCloseImage()} />
+              </span>
               <img
                 src={urlFile}
                 alt=""
@@ -51,7 +66,7 @@ const AddData = ({ type }) => {
           {type == "post" && (
             <p className="text-sky-600 mt-3 flex items-center gap-2">
               <BiWorld />
-              <p>Everyone can reply</p>
+              <span>Everyone can reply</span>
             </p>
           )}
         </div>
@@ -72,6 +87,8 @@ const AddData = ({ type }) => {
                     onChange={(e) => handleOnchange(e)}
                     type="file"
                     accept=".png, .jpg, .jpeg"
+                    name="imagePost"
+                    files={form.imagePost}
                     hidden
                   />
                 )}

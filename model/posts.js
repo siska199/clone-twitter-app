@@ -1,18 +1,18 @@
 import { Schema, model, models, SchemaTypes } from "mongoose";
 
 const likeSchema = new Schema({
-  idUser: {
+  user: {
     type: SchemaTypes.ObjectId,
-    ref : 'users'
+    ref: "users",
   },
   like: {
     type: Boolean,
   },
 });
 const commentSchema = new Schema({
-  idUser: {
+  user: {
     type: SchemaTypes.ObjectId,
-    ref: 'users'
+    ref: "users",
   },
   comment: {
     type: String,
@@ -20,8 +20,9 @@ const commentSchema = new Schema({
 });
 
 const postSchema = new Schema({
-  userId: {
+  user: {
     type: SchemaTypes.ObjectId,
+    ref: "users",
   },
   image: {
     type: String,
@@ -33,13 +34,12 @@ const postSchema = new Schema({
   likes: [likeSchema],
   createdAt: {
     type: Date,
-    default: () => Date.now,
+    default: Date.now,
     immutable: true,
   },
   updatedAt: {
     type: Date,
-    default: () => Date.now,
+    default: Date.now,
   },
 });
-export default models.posts || model("posts", postSchema)
-
+export default models.posts || model("posts", postSchema);

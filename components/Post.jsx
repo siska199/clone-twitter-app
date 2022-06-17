@@ -1,5 +1,6 @@
 import React from "react";
 import ReactTimeAgo from "react-time-ago";
+import UserSumInfo from "./UserSumInfo"
 import { BsDot } from "react-icons/bs";
 import { TbDots } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
@@ -35,11 +36,14 @@ const Post = ({ data }) => {
   ];
   return (
     <section className="flex py-4 gap-3 w-full">
-      <img
-        className="md:h-[3rem] ml-6 md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
-        src={data.profilePict}
-        alt=""
-      />
+      <div>
+        <img
+          className="md:h-[3rem] ml-6 md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
+          src={data.profilePict}
+          alt=""
+        />
+        <UserSumInfo/>
+      </div>
       <div className="flex flex-col w-[80%] ">
         <div className="flex gap-2 items-center tracking truncate">
           <h1 className=" md:text-lg text-md  font-semibold text-ellipsis overflow-hidden">

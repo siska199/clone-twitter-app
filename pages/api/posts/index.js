@@ -7,7 +7,8 @@ export default async function handler(req, res) {
 
   if (method == "GET") {
     try {
-      res.send("Error")
+      const data = await posts.find().populate("user");
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).send(`${error}`);
     }
@@ -16,7 +17,7 @@ export default async function handler(req, res) {
     try {
       const { body } = req;
       const createPost = await posts.create(body);
-      console.log(`${createPost}`);
+      res.status(200).send("data success");
     } catch (error) {
       res.status(500).send(`${error}`);
     }
