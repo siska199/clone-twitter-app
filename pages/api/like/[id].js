@@ -10,7 +10,10 @@ export default async function handler(req, res) {
     const getPost = await posts.findOne({ id });
 
     const user = getPost.likes.filter((data) => data.user == body.user);
-    user[0] ? getPost.likes.pull({_id:user[0].id}) : getPost.likes.push(body);
+    console.log("user: ", user);
+    user[0]
+      ? getPost.likes.pull({ _id: user[0].id })
+      : getPost.likes.push(body);
 
     await getPost.save();
     res.status(201).json(getPost);

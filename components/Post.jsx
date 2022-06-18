@@ -7,8 +7,13 @@ import { GoComment } from "react-icons/go";
 import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
-const Post = ({ data }) => {
+import { useDispatch } from "react-redux";
+import { handleLike } from "../redux/features/postSlice";
+import { useSession } from "next-auth/react";
+const Post = ({ data, setRender, render }) => {
   console.log("data post: ", data);
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
   const Icons = [
     {
       name: "comment",
@@ -36,7 +41,18 @@ const Post = ({ data }) => {
     },
   ];
 
-  
+  const handleOnclikIcon = async (type) => {
+    type == "love" &&
+      dispatch(
+        handleLike({
+          idPost: data.id,
+          form: {
+            user: session.user.id,
+            like: true,
+          },
+        })
+      ).then(() => setRender(!render));
+  };
   return (
     <section className="flex py-4 gap-3 w-full">
       <div>
@@ -81,6 +97,7 @@ const Post = ({ data }) => {
           {Icons.map((data, i) => (
             <div
               key={i}
+              onClick={() => handleOnclikIcon(data.name)}
               className={`flex cursor-pointer group gap-2 hover:${data.colorText} items-center font-thin text-slate-400`}
             >
               <span className="group-hover:bg-gray-900 p-[0.5rem] text-lg rounded-full ">

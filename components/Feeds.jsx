@@ -22,7 +22,7 @@ const Feeds = () => {
       </nav>
       <AddData setRender={setRender} render={render} type="post" />
       {posts.map((data, i) => (
-        <Post key={i} data={data} />
+        <Post setRender={setRender} render={render} key={i} data={data} />
       ))}
     </section>
   );

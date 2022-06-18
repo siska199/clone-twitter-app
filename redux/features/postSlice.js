@@ -49,6 +49,25 @@ const handleGetPosts = createAsyncThunk("posts/GetPosts", async (userId) => {
   }
 });
 
+const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
+  try {
+    const resLike = await fetch(
+      `http://localhost:3000/api/like/${data.idPost}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data.form),
+      }
+    ).then(r=>r.json())
+    console.log("resLike: ", resLike)
+  } catch (error) {
+    return error;
+  }
+});
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -66,6 +85,7 @@ const postSlice = createSlice({
     [handleAddPost.rejected]: (state) => {
       state.value.loading = false;
     },
+
     [handleGetPosts.pending]: (state) => {
       state.value.loading = true;
     },
@@ -76,9 +96,19 @@ const postSlice = createSlice({
     [handleGetPosts.rejected]: (state) => {
       state.value.loading = false;
     },
+
+    [handleLike.pending]: (state) => {
+      state.value.loading = true;
+    },
+    [handleLike.fulfilled]: (state, action) => {
+      state.value.loading = false;
+    },
+    [handleLike.rejected]: (state) => {
+      state.value.loading = false;
+    },
   },
 });
 
 export const { handleModalComment, handleLoading } = postSlice.actions;
-export { handleAddPost, handleGetPosts };
+export { handleAddPost, handleGetPosts, handleLike };
 export default postSlice.reducer;
