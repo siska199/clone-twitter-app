@@ -31,7 +31,7 @@ const SignIn = ({ providers }) => {
   return (
     <Modal
       handleCloseModal={handleCloseModal}
-      style="lg:w-[45vw] h-full no-scrollbar flex flex-col overflow-y-auto lg:rounded-3xl"
+      style="md:w-[45vw] w-full h-full md:h-auto no-scrollbar flex flex-col overflow-y-auto md:rounded-3xl"
     >
       <form action="" autoComplete="off" className="lg:w-2/3 mx-auto">
         <h1 className="text-[2rem] font-bold mb-8 text-center">

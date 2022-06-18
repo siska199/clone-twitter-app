@@ -1,8 +1,8 @@
 import users from "../../../model/users";
-import dbConnection from "../../../lib/dbConnection";
+import clientPromise from "../../../lib/dbClientPromise";
 
 export default async function handler(req, res) {
-  await dbConnection();
+  await clientPromise;
   const { method } = req;
   if (method == "GET") {
     const getUsers = await users.find();

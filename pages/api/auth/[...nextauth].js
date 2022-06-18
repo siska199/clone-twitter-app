@@ -2,6 +2,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import clientPromise from "../../../lib/dbClientPromise";
+import users from "../../../model/users";
 
 export default NextAuth({
   providers: [
@@ -19,5 +20,14 @@ export default NextAuth({
   session: {
     strategy: "jwt",
   },
-  debug:true
+  callbacks: {
+    async session({ session, token, user }) {
+      const userData = await MongoDBAdapter(clientPromise).getUserByEmail(
+        session.user.email
+      );
+      session.user.id = userData.id;
+      return session;
+    },
+  },
+  debug: true,
 });

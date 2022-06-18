@@ -26,18 +26,18 @@ const Sidebar = () => {
               </div>
             </button>
           </div>
-          <button className="hidden sm:block sm:h-[2.5rem] sm:w-[2.5rem] md:h-auto lg:w-[90%] sm:text-[0.7rem]  bg-sky-600 hover:bg-sky-700 mt-3 w-[100%] rounded-full py-3 font-bold md:text-md lg:text-lg">
+          <button className="hidden sm:block mx-auto sm:h-[2.5rem] sm:w-[2.5rem] md:h-auto lg:w-[90%] sm:text-[0.7rem]  bg-sky-600 hover:bg-sky-700 mt-3 w-[100%] rounded-full py-3 font-bold md:text-md lg:text-lg">
             Tweet
           </button>
         </div>
 
-        <div className="hidden sm:block mt-8 ">
+        <div className="hidden sm:flex mt-8 ">
           <button
             onClick={() => signOut()}
-            className="lg:w-full lg:h-[4rem] flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3"
+            className="lg:w-full lg:h-[4rem] mx-auto flex gap-2 justify-between items-center rounded-full hover:bg-zinc-900 lg:p-3"
           >
             <img
-              className="h-[2.3rem] w-[2.5rem] object-cover rounded-full"
+              className="lg:h-[2.3rem] lg:w-[2.5rem] h-[2.5rem] w-[2.5rem] object-cover rounded-full"
               src="https://img.freepik.com/free-photo/happiness-wellbeing-confidence-concept-cheerful-attractive-african-american-woman-curly-haircut-cross-arms-chest-self-assured-powerful-pose-smiling-determined-wear-yellow-sweater_176420-35063.jpg?w=2000"
               alt=""
             />

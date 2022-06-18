@@ -1,9 +1,13 @@
 import posts from "../../../model/posts";
-import dbConnection from "../../../lib/dbConnection";
+import clientPromise from "../../../lib/dbClientPromise";
+import { getToken } from "next-auth/jwt";
 
 export default async function handler(req, res) {
-  await dbConnection();
+  await clientPromise;
   const { method } = req;
+  const secret = process.env.JWT_SECRET;
+  const token = await getToken({ req, secret });
+  console.log("token decrypt: ", token);
 
   if (method == "GET") {
     try {
@@ -17,7 +21,7 @@ export default async function handler(req, res) {
     try {
       const { body } = req;
       const createPost = await posts.create(body);
-      res.status(200).send("data success");
+      res.status(200).send(createPost);
     } catch (error) {
       res.status(500).send(`${error}`);
     }
