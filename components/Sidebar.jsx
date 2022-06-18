@@ -8,7 +8,7 @@ import { FaLock } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 const Sidebar = () => {
   return (
-    <section className="fixed bottom-0 sm:relative  bg-black  w-full sm:flex-[0.05] lg:pl-[4rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
+    <section className="fixed bottom-0 sm:relative  bg-black  w-full flex-[0.1] lg:pl-[2rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
       <div className="sticky top-0  sm:h-[100vh] overflow-y-scroll no-scrollbar lg:items-start justify-between  gap-6  ">
         <div className="">
           <button className="hidden sm:block hover:bg-zinc-900 ml-1 mb-3 rounded-full p-2">

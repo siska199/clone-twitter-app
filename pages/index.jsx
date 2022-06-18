@@ -2,7 +2,6 @@ import { getProviders, getSession } from "next-auth/react";
 import AuthPage from "../components/AuthPage";
 import HomePage from "../components/HomePage";
 import { useSession } from "next-auth/react";
-import { signIn, signOut } from "next-auth/react";
 
 const Home = ({ providers }) => {
   const { data: session, status } = useSession();

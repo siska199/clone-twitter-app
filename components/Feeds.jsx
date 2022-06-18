@@ -6,7 +6,7 @@ import { dataPostsFaker as dataPosts } from "../lib/data";
 
 const Feeds = () => {
   return (
-    <section className="flex-grow flex-[0.7] border-gray-500 border-r-[0.005rem] min-h-[900vh] ">
+    <section className="flex-grow lg:flex-[0.9] border-gray-500 border-r-[0.005rem] min-h-[900vh] ">
       <nav className="px-4 flex h-[4rem] items-center justify-between top-0 sticky bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm">
         <h5 className="text-xl font-bold">Home</h5>
         <BsStars size="1.5rem" />

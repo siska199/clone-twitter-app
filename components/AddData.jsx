@@ -10,8 +10,18 @@ const AddData = ({ type }) => {
     imagePost: null,
   });
 
+  const handleClickIcon = (name) => {
+    if (name == "picture") return imgRef.current.click();
+  };
+  const handleCloseImage = () => {
+    setUrlFile(null);
+    setForm({
+      ...form,
+      imagePost: null,
+    });
+    imgRef.current.value = null;
+  };
   const handleOnchange = (e) => {
-    console.log("set");
     if (e.target.name == "imagePost" && e.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
@@ -22,19 +32,11 @@ const AddData = ({ type }) => {
     setForm({
       ...form,
       [e.target.name]:
-        e.target.name == "imagePost" ? e.target.files : e.target.value,
+        e.target.name == "imagePost" ? e.target.files[0] : e.target.value,
     });
   };
-
-  const handleClickIcon = (name) => {
-    if (name == "picture") return imgRef.current.click();
-  };
-  const handleCloseImage = () => {
-    setUrlFile(null);
-    setForm({
-      ...form,
-      imagePost: null,
-    });
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
   };
   return (
     <form className="px-6 py-3 flex gap-4 border-b-[0.005rem] border-gray-500 w-full">
@@ -46,8 +48,10 @@ const AddData = ({ type }) => {
       <div className="flex flex-col md:w-full w-[80%]">
         <div className="border-b-[0.005rem] border-gray-500 pb-4">
           <textarea
+            name="tweet"
             placeholder="What's happening?"
             rows={3}
+            onChange={(e) => handleOnchange(e)}
             className="mt-3 outline-none placeholder:text-xl placeholder:font-thin w-full bg-transparent "
           ></textarea>
           {urlFile && (
@@ -88,7 +92,6 @@ const AddData = ({ type }) => {
                     type="file"
                     accept=".png, .jpg, .jpeg"
                     name="imagePost"
-                    files={form.imagePost}
                     hidden
                   />
                 )}
@@ -96,8 +99,9 @@ const AddData = ({ type }) => {
             ))}
           </ul>
           <button
+            onClick={(e) => handleOnSubmit(e)}
             className="bg-sky-600 w-[5rem] py-[0.35rem] rounded-full disabled:opacity-75 "
-            disabled
+            disabled={form.tweet ? false : true}
           >
             Tweet
           </button>

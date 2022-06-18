@@ -10,7 +10,7 @@ const WhoToFollow = () => {
             key={i}
             className="cursor-pointer hover:bg-zinc-700 text-slate-300 px-5 py-4 flex justify-between items-center"
           >
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <img src={data.image} className="w-[3rem] h-[3rem] object-cover rounded-full" alt="" />
               <div>
                 <h1 className="text-white font-bold text-lg">{data.name}</h1>
