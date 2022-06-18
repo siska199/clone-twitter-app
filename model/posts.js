@@ -1,9 +1,9 @@
 import { Schema, model, models, SchemaTypes } from "mongoose";
-
+import users from "./users";
 const likeSchema = new Schema({
   user: {
     type: SchemaTypes.ObjectId,
-    ref: "users",
+    ref: users,
   },
   like: {
     type: Boolean,
@@ -12,7 +12,7 @@ const likeSchema = new Schema({
 const commentSchema = new Schema({
   user: {
     type: SchemaTypes.ObjectId,
-    ref: "users",
+    ref: users,
   },
   comment: {
     type: String,
@@ -22,7 +22,7 @@ const commentSchema = new Schema({
 const postSchema = new Schema({
   user: {
     type: SchemaTypes.ObjectId,
-    ref: "users",
+    ref: users,
   },
   image: {
     type: String,

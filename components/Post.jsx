@@ -1,6 +1,6 @@
 import React from "react";
 import ReactTimeAgo from "react-time-ago";
-import UserSumInfo from "./UserSumInfo"
+import UserSumInfo from "./UserSumInfo";
 import { BsDot } from "react-icons/bs";
 import { TbDots } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
@@ -8,7 +8,7 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 const Post = ({ data }) => {
-  console.log("data id posts: ", data._id)
+  console.log("data post: ", data);
   const Icons = [
     {
       name: "comment",
@@ -20,13 +20,13 @@ const Post = ({ data }) => {
       name: "retweet",
       icon: <VscSync />,
       data: 0,
-      colorText:"text-sky-600",
+      colorText: "text-sky-600",
     },
     {
       name: "love",
       icon: <BsHeart />,
       data: data.likes.length,
-      colorText:"text-sky-600",
+      colorText: "text-sky-600",
     },
     {
       name: "download",
@@ -35,6 +35,8 @@ const Post = ({ data }) => {
       colorText: "text-sky-600",
     },
   ];
+
+  
   return (
     <section className="flex py-4 gap-3 w-full">
       <div>
@@ -43,7 +45,7 @@ const Post = ({ data }) => {
           src={data.user.image}
           alt=""
         />
-        <UserSumInfo/>
+        <UserSumInfo />
       </div>
       <div className="flex flex-col w-[80%] ">
         <div className="flex gap-2 items-center tracking truncate">

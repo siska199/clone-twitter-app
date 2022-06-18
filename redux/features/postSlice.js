@@ -4,7 +4,6 @@ const initialState = {
   value: {
     modalComment: false,
     loading: false,
-    response: "",
     posts: [],
   },
 };
@@ -63,7 +62,6 @@ const postSlice = createSlice({
     [handleAddPost.fulfilled]: (state, action) => {
       console.log("payload: ", action.payload);
       state.value.loading = false;
-      state.value.response = action.payload;
     },
     [handleAddPost.rejected]: (state) => {
       state.value.loading = false;

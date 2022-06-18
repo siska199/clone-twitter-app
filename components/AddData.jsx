@@ -6,16 +6,16 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { handleAddPost } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
-const AddData = ({ type }) => {
+const AddData = ({ type, setRender, render }) => {
   const dispatch = useDispatch();
-  const {data:session} = useSession()
+  const { data: session } = useSession();
   const loading = useSelector((state) => state.post.value.loading);
   const imgRef = useRef(null);
   const [urlFile, setUrlFile] = useState(null);
   const initialValueForm = {
     tweet: "",
     image: null,
-    user : session&&session.user.id
+    user: session && session.user.id,
   };
   const [form, setForm] = useState(initialValueForm);
 
@@ -49,9 +49,12 @@ const AddData = ({ type }) => {
     e.preventDefault();
     switch (type) {
       case "post":
-        return dispatch(handleAddPost(form)).then(() =>
-          setForm(initialValueForm)
-        );
+        return dispatch(handleAddPost(form)).then(() => {
+          setTimeout(() => {
+            setForm(initialValueForm);
+            setRender(!render);
+          }, 1000);
+        });
       default:
         return "";
     }
@@ -72,7 +75,7 @@ const AddData = ({ type }) => {
             rows={3}
             onChange={(e) => handleOnchange(e)}
             value={form.tweet}
-            className="mt-3 outline-none placeholder:text-xl placeholder:font-thin w-full bg-transparent "
+            className="mt-3 outline-none no-scrollbar placeholder:text-xl placeholder:font-thin w-full bg-transparent "
           ></textarea>
           {form.image && (
             <div className="relative">
@@ -82,7 +85,7 @@ const AddData = ({ type }) => {
               <img
                 src={urlFile}
                 alt=""
-                className="max-h-[50vh] w-full object-cover border-2 rounded-3xl"
+                className="max-h-[25rem] object-cover rounded-3xl border-[0.05rem] border-gray-500"
               />
             </div>
           )}
