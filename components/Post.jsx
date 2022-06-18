@@ -8,24 +8,25 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 const Post = ({ data }) => {
+  console.log("data id posts: ", data._id)
   const Icons = [
     {
       name: "comment",
       icon: <GoComment />,
-      data: data.comments,
+      data: data.comments.length,
       colorText: "text-sky-600",
     },
     {
       name: "retweet",
       icon: <VscSync />,
-      data: data.retweets,
-      colorText: "text-green-600",
+      data: 0,
+      colorText:"text-sky-600",
     },
     {
       name: "love",
       icon: <BsHeart />,
-      data: data.loves,
-      colorText: "text-rose-600",
+      data: data.likes.length,
+      colorText:"text-sky-600",
     },
     {
       name: "download",
@@ -39,7 +40,7 @@ const Post = ({ data }) => {
       <div>
         <img
           className="md:h-[3rem] ml-6 md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
-          src={data.profilePict}
+          src={data.user.image}
           alt=""
         />
         <UserSumInfo/>
@@ -47,11 +48,11 @@ const Post = ({ data }) => {
       <div className="flex flex-col w-[80%] ">
         <div className="flex gap-2 items-center tracking truncate">
           <h1 className=" md:text-lg text-md  font-semibold text-ellipsis overflow-hidden">
-            {data.name}
+            {data.user.name}
           </h1>
 
           <p className="font-thin text-slate-400 flex items-center text-ellipsis overflow-hidden">
-            @{data.username}
+            @{data.user.username}
             <BsDot />
             <span className="text-sm text-ellipsis overflow-hidden">
               {<ReactTimeAgo date={data.createdAt} />}
@@ -69,7 +70,7 @@ const Post = ({ data }) => {
         <div className="flex mt-3">
           <img
             className="max-h-[25rem] object-cover rounded-3xl border-[0.05rem] border-gray-500"
-            src={data.picture}
+            src={data.image}
             alt=""
           />
         </div>

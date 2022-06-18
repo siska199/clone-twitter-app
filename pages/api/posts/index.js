@@ -1,9 +1,10 @@
 import posts from "../../../model/posts";
-import clientPromise from "../../../lib/dbClientPromise";
+import dbConnect from "../../../lib/dbConnect";
 import { getToken } from "next-auth/jwt";
 
 export default async function handler(req, res) {
-  await clientPromise;
+  await dbConnect()
+
   const { method } = req;
   const secret = process.env.JWT_SECRET;
   const token = await getToken({ req, secret });
@@ -17,12 +18,14 @@ export default async function handler(req, res) {
       res.status(500).send(`${error}`);
     }
   }
+
   if (method == "POST") {
     try {
       const { body } = req;
       const createPost = await posts.create(body);
       res.status(200).send(createPost);
     } catch (error) {
+      console.log(error);
       res.status(500).send(`${error}`);
     }
   }

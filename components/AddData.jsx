@@ -1,14 +1,23 @@
 import React, { useState, useRef } from "react";
 import { iconInputs } from "../lib/data";
+import LoadingIcon from "./LoadingIcon";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { handleAddPost } from "../redux/features/postSlice";
+import { useSession } from "next-auth/react";
 const AddData = ({ type }) => {
+  const dispatch = useDispatch();
+  const {data:session} = useSession()
+  const loading = useSelector((state) => state.post.value.loading);
   const imgRef = useRef(null);
   const [urlFile, setUrlFile] = useState(null);
-  const [form, setForm] = useState({
+  const initialValueForm = {
     tweet: "",
-    imagePost: null,
-  });
+    image: null,
+    user : session&&session.user.id
+  };
+  const [form, setForm] = useState(initialValueForm);
 
   const handleClickIcon = (name) => {
     if (name == "picture") return imgRef.current.click();
@@ -17,12 +26,12 @@ const AddData = ({ type }) => {
     setUrlFile(null);
     setForm({
       ...form,
-      imagePost: null,
+      image: initialValueForm.image,
     });
     imgRef.current.value = null;
   };
   const handleOnchange = (e) => {
-    if (e.target.name == "imagePost" && e.target.files[0]) {
+    if (e.target.name == "image" && e.target.files[0]) {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = (readerEvent) => {
@@ -32,12 +41,22 @@ const AddData = ({ type }) => {
     setForm({
       ...form,
       [e.target.name]:
-        e.target.name == "imagePost" ? e.target.files[0] : e.target.value,
+        e.target.name == "image" ? e.target.files[0] : e.target.value,
     });
   };
-  const handleOnSubmit = (e) => {
+
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
+    switch (type) {
+      case "post":
+        return dispatch(handleAddPost(form)).then(() =>
+          setForm(initialValueForm)
+        );
+      default:
+        return "";
+    }
   };
+
   return (
     <form className="px-6 py-3 flex gap-4 border-b-[0.005rem] border-gray-500 w-full">
       <img
@@ -52,9 +71,10 @@ const AddData = ({ type }) => {
             placeholder="What's happening?"
             rows={3}
             onChange={(e) => handleOnchange(e)}
+            value={form.tweet}
             className="mt-3 outline-none placeholder:text-xl placeholder:font-thin w-full bg-transparent "
           ></textarea>
-          {urlFile && (
+          {form.image && (
             <div className="relative">
               <span className="absolute cursor-pointer top-2 left-2 text-lg bg-black/40 hover:bg-black/60 backdrop-blur-lg p-3 rounded-full">
                 <AiOutlineClose onClick={() => handleCloseImage()} />
@@ -91,7 +111,7 @@ const AddData = ({ type }) => {
                     onChange={(e) => handleOnchange(e)}
                     type="file"
                     accept=".png, .jpg, .jpeg"
-                    name="imagePost"
+                    name="image"
                     hidden
                   />
                 )}
@@ -100,10 +120,10 @@ const AddData = ({ type }) => {
           </ul>
           <button
             onClick={(e) => handleOnSubmit(e)}
-            className="bg-sky-600 w-[5rem] py-[0.35rem] rounded-full disabled:opacity-75 "
+            className="bg-sky-600 w-[7rem] py-[0.35rem] rounded-full disabled:opacity-75 "
             disabled={form.tweet ? false : true}
           >
-            Tweet
+            Tweet {loading && <LoadingIcon size="w-[1rem]" />}
           </button>
         </div>
       </div>
