@@ -6,11 +6,13 @@ import { TbDots } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
 import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
+import { AiFillHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { handleLike } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
 const Post = ({ data, setRender, render }) => {
+  console.log("dats love:", data.like);
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const Icons = [
@@ -18,25 +20,25 @@ const Post = ({ data, setRender, render }) => {
       name: "comment",
       icon: <GoComment />,
       data: data.comments.length,
-      colorText: "text-sky-600",
+      style: "text-sky-600",
     },
     {
       name: "retweet",
       icon: <VscSync />,
       data: 0,
-      colorText: "text-sky-600",
+      style: "text-sky-600",
     },
     {
       name: "love",
-      icon: <BsHeart />,
+      icon: data.like ? <AiFillHeart /> : <BsHeart />,
       data: data.likes.length,
-      colorText: "text-sky-600",
+      style: `text-sky-600 ${data.like && "!text-rose-600"}`,
     },
     {
       name: "download",
       icon: <FiDownload />,
       data: "",
-      colorText: "text-sky-600",
+      style: "text-sky-600",
     },
   ];
 
@@ -72,7 +74,7 @@ const Post = ({ data, setRender, render }) => {
             @{data.user.username}
             <BsDot />
             <span className="text-sm text-ellipsis overflow-hidden">
-              {<ReactTimeAgo date={data.createdAt} />}
+              {<ReactTimeAgo date={Date.parse(data.createdAt)} />}
             </span>
           </p>
           <span className="hover:bg-gray-900 ml-auto p-1 rounded-full">
@@ -97,7 +99,7 @@ const Post = ({ data, setRender, render }) => {
             <div
               key={i}
               onClick={() => handleOnclikIcon(data.name)}
-              className={`flex cursor-pointer group gap-2 hover:${data.colorText} items-center font-thin text-slate-400`}
+              className={`flex cursor-pointer group gap-2 hover:${data.style} items-center font-thin text-slate-400`}
             >
               <span className="group-hover:bg-gray-900 p-[0.5rem] text-lg rounded-full ">
                 {data.icon}

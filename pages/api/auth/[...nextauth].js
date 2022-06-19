@@ -25,6 +25,7 @@ export default NextAuth({
         session.user.email
       );
       session.user.id = userData.id;
+      token.id = userData.id;
       return session;
     },
   },
