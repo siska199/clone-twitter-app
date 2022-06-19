@@ -40,7 +40,7 @@ const SignUp = () => {
       handleCloseModal={handleCloseModal}
       style="md:w-[45vw] h-full md:h-auto no-scrollbar flex flex-col overflow-y-scroll md:rounded-3xl"
     >
-      <form autoComplete="off"  className=" mx-auto">
+      <form autoComplete="off"  className="px-[5rem] mx-auto">
         <h1 className="text-[2rem] font-bold mb-5">Create your Account</h1>
         <Input
           label="name"

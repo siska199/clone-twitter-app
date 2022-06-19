@@ -1,6 +1,7 @@
 import React from "react";
 import ReactTimeAgo from "react-time-ago";
 import UserSumInfo from "./UserSumInfo";
+import Comments from "./Comments";
 import { BsDot } from "react-icons/bs";
 import { TbDots } from "react-icons/tb";
 import { GoComment } from "react-icons/go";
@@ -8,12 +9,15 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleLike } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
+import { handleModalComment } from "../redux/features/postSlice";
+
 const Post = ({ data, setRender, render }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
+  const modalComment = useSelector((state) => state.post.value.modalComment);
   const Icons = [
     {
       name: "comment",
@@ -52,6 +56,7 @@ const Post = ({ data, setRender, render }) => {
           },
         })
       ).then(() => setRender(!render));
+    type == "comment" && dispatch(handleModalComment(!modalComment));
   };
   return (
     <section className="flex py-4 gap-3 w-full">
@@ -108,6 +113,7 @@ const Post = ({ data, setRender, render }) => {
           ))}
         </div>
       </div>
+      {modalComment && <Comments data={data} />}
     </section>
   );
 };

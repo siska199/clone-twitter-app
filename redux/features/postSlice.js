@@ -71,7 +71,9 @@ const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    handleModalComment: (state, action) => {},
+    handleModalComment: (state, action) => {
+      state.value.modalComment = action.payload;
+    },
   },
   extraReducers: {
     [handleAddPost.pending]: (state) => {

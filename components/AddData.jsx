@@ -3,7 +3,7 @@ import { iconInputs } from "../lib/data";
 import LoadingIcon from "./LoadingIcon";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { handleAddPost } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
 const AddData = ({ type, setRender, render }) => {
@@ -60,18 +60,26 @@ const AddData = ({ type, setRender, render }) => {
   };
 
   return (
-    <form className="px-6 py-3 flex gap-4 border-b-[0.005rem] border-gray-500 w-full">
+    <form
+      className={` ${type == "post" && "px-6 py-3"}  flex gap-4 ${
+        type == "post" && "border-b-[0.005rem]"
+      } border-gray-500 w-full`}
+    >
       <img
         className="h-[3rem] w-[3rem] object-cover rounded-full"
         src="https://img.freepik.com/free-photo/happiness-wellbeing-confidence-concept-cheerful-attractive-african-american-woman-curly-haircut-cross-arms-chest-self-assured-powerful-pose-smiling-determined-wear-yellow-sweater_176420-35063.jpg?w=2000"
         alt=""
       />
       <div className="flex flex-col md:w-full w-[80%]">
-        <div className="border-b-[0.005rem] border-gray-500 pb-4">
+        <div
+          className={`${
+            type == "post" && "border-b-[0.005rem]"
+          } border-gray-500 pb-4`}
+        >
           <textarea
             name="tweet"
             placeholder="What's happening?"
-            rows={3}
+            rows={type=="post"?3:1}
             onChange={(e) => handleOnchange(e)}
             value={form.tweet}
             className="mt-3 outline-none no-scrollbar placeholder:text-xl placeholder:font-thin w-full bg-transparent "
@@ -96,36 +104,40 @@ const AddData = ({ type, setRender, render }) => {
             </p>
           )}
         </div>
-        <div className="flex justify-between items-center">
-          <ul className="flex gap-[0.2rem]">
-            {iconInputs.map((data, i) => (
-              <li
-                onClick={() => handleClickIcon(data.name)}
-                key={i}
-                className={`${i == 4 && "hidden md:block"} ${
-                  i == 2 && "hidden md:block"
-                }  text-lg text-sky-600 cursor-pointer hover:bg-gray-900 p-2 rounded-full my-3`}
-              >
-                {data.icon}
-                {data.name == "picture" && (
-                  <input
-                    ref={imgRef}
-                    onChange={(e) => handleOnchange(e)}
-                    type="file"
-                    accept=".png, .jpg, .jpeg"
-                    name="image"
-                    hidden
-                  />
-                )}
-              </li>
-            ))}
-          </ul>
+        <div className="flex justify-between  items-center">
+          {type == "post" && (
+            <ul className="flex gap-[0.2rem]">
+              {iconInputs.map((data, i) => (
+                <li
+                  onClick={() => handleClickIcon(data.name)}
+                  key={i}
+                  className={`${i == 4 && "hidden md:block"} ${
+                    i == 2 && "hidden md:block"
+                  }  text-lg text-sky-600 cursor-pointer hover:bg-gray-900 p-2 rounded-full my-3`}
+                >
+                  {data.icon}
+                  {data.name == "picture" && (
+                    <input
+                      ref={imgRef}
+                      onChange={(e) => handleOnchange(e)}
+                      type="file"
+                      accept=".png, .jpg, .jpeg"
+                      name="image"
+                      hidden
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
           <button
             onClick={(e) => handleOnSubmit(e)}
-            className="bg-sky-600 w-[7rem] py-[0.35rem] rounded-full disabled:opacity-75 "
+            className={`bg-sky-600 w-[7rem] ${
+              type == "comment" && "ml-auto"
+            } py-[0.35rem] rounded-full disabled:opacity-75 `}
             disabled={form.tweet ? false : true}
           >
-            Tweet
+            {type == "post" ? "Tweet" : "Reply"}
           </button>
         </div>
       </div>

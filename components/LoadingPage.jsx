@@ -1,6 +1,6 @@
 import React from "react";
 import Lottie from "lottie-react";
-import animationData from "../public/assets/3-dots.json";
+import animationData from "../public/assets/loading.json";
 
 const LoadingPage = () => {
   return (

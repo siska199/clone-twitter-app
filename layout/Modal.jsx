@@ -2,17 +2,17 @@ import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
 const Modal = ({ children, handleCloseModal, style }) => {
   return (
-    <article className="h-full z-[99] w-full fixed flex backdrop-opacity-10 backdrop-invert bg-white/10 items-center justify-center">
-      <div className={`bg-black px-5 pb-5 ${style}`}>
-        <header className="sticky top-0 pt-5 bg-black">
+    <article className="h-full z-[99] w-full fixed top-0 left-0 flex backdrop-invert backdrop-opacity-5 bg-black/20 items-center justify-center">
+      <div className={`bg-black p-5 ${style}`}>
+        <header className="sticky top-0  bg-black">
           <button
             onClick={() => handleCloseModal()}
             className="p-2 h-8 w-8 cursor-pointer flex rounded-full hover:bg-zinc-700"
           >
-            <AiOutlineClose className="m-auto " />
+            <AiOutlineClose className="m-auto text-lg" />
           </button>
         </header>
-        <section className="px-10 py-5">{children}</section>
+        <section className="">{children}</section>
       </div>
     </article>
   );
