@@ -1,10 +1,11 @@
 import React from "react";
-import Modal from "../layout/Modal";
+import Lottie from "lottie-react";
+import animationData from "../public/assets/3-dots.json";
+
 const LoadingPage = () => {
-  
   return (
     <div className="fixed w-full h-full text-white bg-black/80 flex justify-center items-center">
-      Loading...
+      <Lottie animationData={animationData} />
     </div>
   );
 };

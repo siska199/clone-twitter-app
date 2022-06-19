@@ -50,7 +50,6 @@ const handleGetPosts = createAsyncThunk("posts/GetPosts", async (userId) => {
 });
 
 const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
-  console.log("data: ", data.idPost);
   try {
     const resLike = await fetch(
       `http://localhost:3000/api/like/${data.idPost}`,
@@ -63,7 +62,6 @@ const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
         body: JSON.stringify(data.form),
       }
     ).then((r) => r.json());
-    console.log("resLike: ", resLike);
   } catch (error) {
     return error;
   }

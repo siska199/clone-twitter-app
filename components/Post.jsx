@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { handleLike } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
 const Post = ({ data, setRender, render }) => {
-  console.log("dats love:", data.like);
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const Icons = [
