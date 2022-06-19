@@ -8,6 +8,7 @@ export async function middleware(req) {
       secret: process.env.JWT_SECRET,
       secureCookie: process.env.NODE_ENV == "production",
     });
+    
     const url = req.nextUrl.clone();
     url.pathname = "/"
     if (!session) return NextResponse.redirect(url);

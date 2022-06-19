@@ -14,8 +14,13 @@ const commentSchema = new Schema({
     type: SchemaTypes.ObjectId,
     ref: users,
   },
-  comment: {
+  tweet: {
     type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    immutable: true,
   },
 });
 

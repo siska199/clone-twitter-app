@@ -78,8 +78,10 @@ const AddData = ({ type, setRender, render }) => {
         >
           <textarea
             name="tweet"
-            placeholder="What's happening?"
-            rows={type=="post"?3:1}
+            placeholder={`${
+              type == "post" ? "What's happening?" : "Tweet your reply"
+            }`}
+            rows={type == "post" ? 3 : 1}
             onChange={(e) => handleOnchange(e)}
             value={form.tweet}
             className="mt-3 outline-none no-scrollbar placeholder:text-xl placeholder:font-thin w-full bg-transparent "
