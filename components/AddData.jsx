@@ -3,13 +3,12 @@ import { iconInputs } from "../lib/data";
 import LoadingIcon from "./LoadingIcon";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { handleAddPost } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
 const AddData = ({ type, setRender, render }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
-  const loading = useSelector((state) => state.post.value.loading);
   const imgRef = useRef(null);
   const [urlFile, setUrlFile] = useState(null);
   const initialValueForm = {
@@ -126,7 +125,7 @@ const AddData = ({ type, setRender, render }) => {
             className="bg-sky-600 w-[7rem] py-[0.35rem] rounded-full disabled:opacity-75 "
             disabled={form.tweet ? false : true}
           >
-            Tweet {loading && <LoadingIcon size="w-[1rem]" />}
+            Tweet
           </button>
         </div>
       </div>

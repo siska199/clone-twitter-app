@@ -50,6 +50,7 @@ const handleGetPosts = createAsyncThunk("posts/GetPosts", async (userId) => {
 });
 
 const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
+  console.log("data: ", data.idPost);
   try {
     const resLike = await fetch(
       `http://localhost:3000/api/like/${data.idPost}`,
@@ -61,8 +62,8 @@ const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
         },
         body: JSON.stringify(data.form),
       }
-    ).then(r=>r.json())
-    console.log("resLike: ", resLike)
+    ).then((r) => r.json());
+    console.log("resLike: ", resLike);
   } catch (error) {
     return error;
   }
@@ -79,7 +80,6 @@ const postSlice = createSlice({
       state.value.loading = true;
     },
     [handleAddPost.fulfilled]: (state, action) => {
-      console.log("payload: ", action.payload);
       state.value.loading = false;
     },
     [handleAddPost.rejected]: (state) => {
@@ -97,15 +97,9 @@ const postSlice = createSlice({
       state.value.loading = false;
     },
 
-    [handleLike.pending]: (state) => {
-      state.value.loading = true;
-    },
-    [handleLike.fulfilled]: (state, action) => {
-      state.value.loading = false;
-    },
-    [handleLike.rejected]: (state) => {
-      state.value.loading = false;
-    },
+    [handleLike.pending]: (state) => {},
+    [handleLike.fulfilled]: (state, action) => {},
+    [handleLike.rejected]: (state) => {},
   },
 });
 

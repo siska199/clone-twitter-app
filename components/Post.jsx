@@ -11,7 +11,6 @@ import { useDispatch } from "react-redux";
 import { handleLike } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
 const Post = ({ data, setRender, render }) => {
-  console.log("data post: ", data);
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const Icons = [
@@ -45,7 +44,7 @@ const Post = ({ data, setRender, render }) => {
     type == "love" &&
       dispatch(
         handleLike({
-          idPost: data.id,
+          idPost: data._id,
           form: {
             user: session.user.id,
             like: true,
