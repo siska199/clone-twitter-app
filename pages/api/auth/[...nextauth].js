@@ -26,6 +26,9 @@ export default NextAuth({
       );
       session.user.id = userData.id;
       token.id = userData.id;
+      session.user.username = userData.username;
+      token.username = userData.username;
+
       return session;
     },
   },

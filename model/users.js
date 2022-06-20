@@ -6,6 +6,11 @@ const userSchema = new Schema({
     required: true,
     max: 50,
   },
+  username: {
+    type: String,
+    required: true,
+    max: 50,
+  },
   email: {
     type: String,
     lowercase: true,
