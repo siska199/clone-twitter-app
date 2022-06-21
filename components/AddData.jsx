@@ -4,7 +4,9 @@ import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { handleAddPost, handleAddComment } from "../redux/features/postSlice";
+import { useSession } from "next-auth/react";
 const AddData = ({ type, idPost, setRender, render }) => {
+  const { data: session } = useSession();
   const dispatch = useDispatch();
   const imgRef = useRef(null);
   const [urlFile, setUrlFile] = useState(null);
@@ -75,7 +77,7 @@ const AddData = ({ type, idPost, setRender, render }) => {
     >
       <img
         className="h-[3rem] w-[3rem] object-cover rounded-full"
-        src="https://img.freepik.com/free-photo/happiness-wellbeing-confidence-concept-cheerful-attractive-african-american-woman-curly-haircut-cross-arms-chest-self-assured-powerful-pose-smiling-determined-wear-yellow-sweater_176420-35063.jpg?w=2000"
+        src={session?.user?.image}
         alt=""
       />
       <div className="flex flex-col md:w-full w-[80%]">

@@ -5,8 +5,10 @@ import { BsTwitter } from "react-icons/bs";
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 const Sidebar = () => {
+  const { data: session } = useSession();
+
   return (
     <section className="fixed bottom-0 sm:relative  bg-black  w-full flex-[0.1] lg:pl-[2rem] py-3 px-2 border-r-[0.005rem] border-gray-500 ">
       <div className="sticky top-0  sm:h-[100vh] overflow-y-scroll no-scrollbar lg:items-start justify-between  gap-6  ">
@@ -38,17 +40,19 @@ const Sidebar = () => {
           >
             <img
               className="lg:h-[2.3rem] lg:w-[2.5rem] h-[2.5rem] w-[2.5rem] object-cover rounded-full"
-              src="https://img.freepik.com/free-photo/happiness-wellbeing-confidence-concept-cheerful-attractive-african-american-woman-curly-haircut-cross-arms-chest-self-assured-powerful-pose-smiling-determined-wear-yellow-sweater_176420-35063.jpg?w=2000"
+              src={session?.user?.image}
               alt=""
             />
             <div className="hidden lg:flex flex-col text-left truncate ">
               <div className="flex items-center">
                 <h5 className="font-bold text-ellipsis overflow-hidden">
-                  Siska Apriana Rifianti
+                  {session?.user?.name}
                 </h5>
                 <FaLock />
               </div>
-              <p className="font-thin text-sm text-gray-400">@SiskaRifianti</p>
+              <p className="font-thin text-sm text-gray-400">
+                @{session?.user?.username}
+              </p>
             </div>
             <MdOutlineMoreHoriz size="1.4rem" className="hidden lg:block" />
           </button>
