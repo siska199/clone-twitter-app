@@ -5,6 +5,7 @@ const initialState = {
     modalComment: false,
     loading: false,
     posts: [],
+    comments: [],
   },
 };
 const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
@@ -36,8 +37,28 @@ const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
     return error;
   }
 });
-
-const handleGetPosts = createAsyncThunk("posts/GetPosts", async (userId) => {
+const handleAddComment = createAsyncThunk(
+  "posts/addComment",
+  async ({ idPost, formComment: form }) => {
+    try {
+      const addComment = await fetch(
+        `http://localhost:3000/api/posts/${idPost}/comments`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      ).then((r) => r.json());
+      return addComment;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+const handleGetPosts = createAsyncThunk("posts/GetPosts", async () => {
   try {
     const posts = await fetch("http://localhost:3000/api/posts").then((data) =>
       data.json()
@@ -47,6 +68,19 @@ const handleGetPosts = createAsyncThunk("posts/GetPosts", async (userId) => {
     return error;
   }
 });
+const handleGetComments = createAsyncThunk(
+  "/posts/getComments",
+  async (idPost) => {
+    try {
+      const comments = await fetch(
+        `http://localhost:3000/api/posts/${idPost}/comments`
+      ).then((r) => r.json());
+      return comments;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 
 const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
   try {
@@ -103,11 +137,29 @@ const postSlice = createSlice({
     },
 
     [handleLike.pending]: (state) => {},
-    [handleLike.fulfilled]: (state, action) => {},
+    [handleLike.fulfilled]: (state, action) => {
+      state.value.comments = action.payload;
+    },
     [handleLike.rejected]: (state) => {},
+
+    [handleGetComments.pending]: (state) => {},
+    [handleGetComments.fulfilled]: (state, action) => {
+      state.value.comments = action.payload;
+    },
+    [handleGetComments.rejected]: (state) => {},
+
+    [handleAddComment.pending]: (state) => {},
+    [handleAddComment.fulfilled]: (state, action) => {},
+    [handleAddComment.rejected]: (state) => {},
   },
 });
 
 export const { handleModalComment, handleLoading } = postSlice.actions;
-export { handleAddPost, handleGetPosts, handleLike };
+export {
+  handleAddPost,
+  handleGetPosts,
+  handleLike,
+  handleGetComments,
+  handleAddComment,
+};
 export default postSlice.reducer;

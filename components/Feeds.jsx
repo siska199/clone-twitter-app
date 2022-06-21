@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { BsStars } from "react-icons/bs";
 import AddData from "./AddData";
 import Post from "./Post";
-import { dataPostsFaker as dataPosts } from "../lib/data";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetPosts } from "../redux/features/postSlice";
+
 const Feeds = () => {
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
   const posts = useSelector((state) => state.post.value.posts);
-  const [render, setRender] = useState(false)
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
-    disptach(handleGetPosts());
+    dispatch(handleGetPosts());
   }, [render]);
 
   return (

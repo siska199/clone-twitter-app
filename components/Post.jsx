@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactTimeAgo from "react-time-ago";
 import UserSumInfo from "./UserSumInfo";
 import Comments from "./Comments";
@@ -9,16 +9,13 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { handleLike } from "../redux/features/postSlice";
-import { useSession } from "next-auth/react";
-import { handleModalComment } from "../redux/features/postSlice";
 
 const Post = ({ data, setRender, render }) => {
-  const { data: session } = useSession();
-
   const dispatch = useDispatch();
-  const modalComment = useSelector((state) => state.post.value.modalComment);
+  const [modalComment, setModalComment] = useState(false);
+
   const Icons = [
     {
       name: "comment",
@@ -34,9 +31,9 @@ const Post = ({ data, setRender, render }) => {
     },
     {
       name: "love",
-      icon: data.likeData.like ? <AiFillHeart /> : <BsHeart />,
+      icon: data.likeData ? <AiFillHeart /> : <BsHeart />,
       data: data.likes.length,
-      style: `text-sky-600 ${data.likeData.like && "!text-rose-600"}`,
+      style: `text-sky-600 ${data.likeData && "!text-rose-600"}`,
     },
     {
       name: "download",
@@ -53,19 +50,21 @@ const Post = ({ data, setRender, render }) => {
           handleLike({
             idPost: data._id,
             idLove: data.likeData ? data.likeData._id : "",
-            form: {
-              like: data.likeData ? false : true,
-            },
           })
         ).then(() => setRender(!render));
         break;
       case "comment":
-        dispatch(handleModalComment(!modalComment));
+        handleModalComment();
         break;
       default:
         return "";
     }
   };
+
+  const handleModalComment = () => {
+    setModalComment(!modalComment);
+  };
+
   return (
     <section className="flex py-4 gap-3 w-full">
       <div>
@@ -121,7 +120,19 @@ const Post = ({ data, setRender, render }) => {
           ))}
         </div>
       </div>
-      {modalComment && <Comments data={data} />}
+      {modalComment && (
+        <Comments
+          handleModalComment={handleModalComment}
+          dataPost={{
+            id: data._id,
+            image: data.user.image,
+            name : data.user.name,
+            username: data.user.username,
+            tweet: data.tweet,
+            createdAt:data.createdAt
+          }}
+        />
+      )}
     </section>
   );
 };

@@ -3,11 +3,9 @@ import { iconInputs } from "../lib/data";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { handleAddPost } from "../redux/features/postSlice";
-import { useSession } from "next-auth/react";
-const AddData = ({ type, setRender, render }) => {
+import { handleAddPost, handleAddComment } from "../redux/features/postSlice";
+const AddData = ({ type, idPost, setRender, render }) => {
   const dispatch = useDispatch();
-  const { data: session } = useSession();
   const imgRef = useRef(null);
   const [urlFile, setUrlFile] = useState(null);
   const initialValueForm = {
@@ -46,12 +44,18 @@ const AddData = ({ type, setRender, render }) => {
     e.preventDefault();
     switch (type) {
       case "post":
-        dispatch(
-          handleAddPost({
-            ...form,
-            user: session?.user?.id,
-          })
-        ).then(() => {
+        dispatch(handleAddPost(form)).then(() => {
+          setTimeout(() => {
+            setForm(initialValueForm);
+            setRender(!render);
+          }, 1000);
+        });
+        break;
+      case "comment":
+        const formComment = {
+          comment: form.tweet,
+        };
+        dispatch(handleAddComment({ idPost, formComment })).then(() => {
           setTimeout(() => {
             setForm(initialValueForm);
             setRender(!render);
