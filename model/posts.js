@@ -4,18 +4,22 @@ const likeSchema = new Schema({
   user: {
     type: SchemaTypes.ObjectId,
     ref: users,
+    required: true,
   },
   like: {
     type: Boolean,
+    required: true,
   },
 });
 const commentSchema = new Schema({
   user: {
     type: SchemaTypes.ObjectId,
     ref: users,
+    required: true,
   },
-  tweet: {
+  comment: {
     type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
@@ -28,12 +32,14 @@ const postSchema = new Schema({
   user: {
     type: SchemaTypes.ObjectId,
     ref: users,
+    required: true,
   },
   image: {
     type: String,
   },
   tweet: {
     type: String,
+    required: true,
   },
   comments: [commentSchema],
   likes: [likeSchema],

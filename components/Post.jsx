@@ -16,6 +16,7 @@ import { handleModalComment } from "../redux/features/postSlice";
 
 const Post = ({ data, setRender, render }) => {
   const { data: session } = useSession();
+
   const dispatch = useDispatch();
   const modalComment = useSelector((state) => state.post.value.modalComment);
   const Icons = [
@@ -33,9 +34,9 @@ const Post = ({ data, setRender, render }) => {
     },
     {
       name: "love",
-      icon: data.like ? <AiFillHeart /> : <BsHeart />,
+      icon: data.likeData.like ? <AiFillHeart /> : <BsHeart />,
       data: data.likes.length,
-      style: `text-sky-600 ${data.like && "!text-rose-600"}`,
+      style: `text-sky-600 ${data.likeData.like && "!text-rose-600"}`,
     },
     {
       name: "download",
@@ -46,17 +47,24 @@ const Post = ({ data, setRender, render }) => {
   ];
 
   const handleOnclikIcon = async (type) => {
-    type == "love" &&
-      dispatch(
-        handleLike({
-          idPost: data._id,
-          form: {
-            user: session.user.id,
-            like: true,
-          },
-        })
-      ).then(() => setRender(!render));
-    type == "comment" && dispatch(handleModalComment(!modalComment));
+    switch (type) {
+      case "love":
+        dispatch(
+          handleLike({
+            idPost: data._id,
+            idLove: data.likeData ? data.likeData._id : "",
+            form: {
+              like: data.likeData ? false : true,
+            },
+          })
+        ).then(() => setRender(!render));
+        break;
+      case "comment":
+        dispatch(handleModalComment(!modalComment));
+        break;
+      default:
+        return "";
+    }
   };
   return (
     <section className="flex py-4 gap-3 w-full">

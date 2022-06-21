@@ -20,7 +20,6 @@ const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
         body: formImage,
       }
     ).then((r) => r.json());
-
     const addPost = await fetch("http://localhost:3000/api/posts", {
       method: "POST",
       headers: {
@@ -51,17 +50,23 @@ const handleGetPosts = createAsyncThunk("posts/GetPosts", async (userId) => {
 
 const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
   try {
-    const resLike = await fetch(
-      `http://localhost:3000/api/like/${data.idPost}`,
-      {
-        method: "PUT",
+    if (data.idLove) {
+      await fetch(
+        `http://localhost:3000/api/posts/${data.idPost}/loves/${data.idLove}`,
+        {
+          method: "DELETE",
+        }
+      );
+    } else {
+      await fetch(`http://localhost:3000/api/posts/${data.idPost}/loves`, {
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data.form),
-      }
-    ).then((r) => r.json());
+      }).then((r) => r.json());
+    }
   } catch (error) {
     return error;
   }

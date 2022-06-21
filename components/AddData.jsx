@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { iconInputs } from "../lib/data";
-import LoadingIcon from "./LoadingIcon";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
@@ -14,7 +13,6 @@ const AddData = ({ type, setRender, render }) => {
   const initialValueForm = {
     tweet: "",
     image: null,
-    user: session && session.user.id,
   };
   const [form, setForm] = useState(initialValueForm);
 
@@ -48,12 +46,18 @@ const AddData = ({ type, setRender, render }) => {
     e.preventDefault();
     switch (type) {
       case "post":
-        return dispatch(handleAddPost(form)).then(() => {
+        dispatch(
+          handleAddPost({
+            ...form,
+            user: session?.user?.id,
+          })
+        ).then(() => {
           setTimeout(() => {
             setForm(initialValueForm);
             setRender(!render);
           }, 1000);
         });
+        break;
       default:
         return "";
     }

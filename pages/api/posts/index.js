@@ -6,7 +6,8 @@ const secret = process.env.JWT_SECRET;
 export default async function handler(req, res) {
   await dbConnect();
   const token = await getToken({ req, secret });
-  const { method } = req;
+  console.log("token: ", token);
+  const { method, body } = req;
 
   if (method == "GET") {
     try {
@@ -16,14 +17,17 @@ export default async function handler(req, res) {
         .sort("-createdAt")
         .lean();
 
-      const modData = data.map((post) => ({
-        ...post,
-        like: post.likes.filter((like) =>like.user==token.id)[0]
-          ? true
-          : false,
-      }));
+      const modifiedData = data.map((post) => {
+        return {
+          ...post,
+          likeData: token
+            ? post.likes.filter((like) => like.user == token.id)[0]
+            : "",
+        };
+      });
 
-      res.status(200).json(token ? modData : data);
+      console.log("modifiedData: ", modifiedData);
+      res.status(200).json(modifiedData);
     } catch (error) {
       console.log(error);
       res.status(500).send(`${error}`);
@@ -32,7 +36,7 @@ export default async function handler(req, res) {
 
   if (method == "POST") {
     try {
-      const { body } = req;
+      console.log("body podt: ", body);
       const createPost = await posts.create(body);
       res.status(200).send(createPost);
     } catch (error) {
