@@ -6,7 +6,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@next-auth/mongodb-adapter": "^1.0.3",
     "@reduxjs/toolkit": "^1.8.2",
     "lottie-react": "^2.3.0",
     "mongodb": "^4.6.0",
