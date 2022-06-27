@@ -31,9 +31,9 @@ const SignIn = ({ providers }) => {
   return (
     <Modal
       handleCloseModal={handleCloseModal}
-      style="md:w-[45vw] w-full h-full md:h-auto no-scrollbar flex flex-col overflow-y-auto md:rounded-3xl"
+      style="md:w-[30vw] w-full h-full md:h-auto no-scrollbar flex flex-col overflow-y-auto md:rounded-3xl"
     >
-      <form action="" autoComplete="off" className="lg:w-2/3 mx-auto px-5 mb-5">
+      <form action="" autoComplete="off" className="lg:w-3/4 mx-auto px-5 mb-5">
         <h1 className="text-[2rem] font-bold mb-8 text-center">
           Sign in to twitter
         </h1>

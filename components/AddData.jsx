@@ -47,10 +47,8 @@ const AddData = ({ type, idPost, setRender, render }) => {
     switch (type) {
       case "post":
         dispatch(handleAddPost(form)).then(() => {
-          setTimeout(() => {
-            setForm(initialValueForm);
-            setRender(!render);
-          }, 1000);
+          setForm(initialValueForm);
+          setRender(!render);
         });
         break;
       case "comment":
@@ -58,10 +56,8 @@ const AddData = ({ type, idPost, setRender, render }) => {
           comment: form.tweet,
         };
         dispatch(handleAddComment({ idPost, formComment })).then(() => {
-          setTimeout(() => {
-            setForm(initialValueForm);
-            setRender(!render);
-          }, 1000);
+          setForm(initialValueForm);
+          setRender(!render);
         });
         break;
       default:
