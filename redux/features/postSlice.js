@@ -1,8 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const baseURL =
-  "https://clone-twitter199.vercel.app/" || "http://localhost:3000";
-
 const initialState = {
   value: {
     modalComment: false,
@@ -26,7 +23,7 @@ const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
         body: formImage,
       }
     ).then((r) => r.json());
-    const addPost = await fetch(`${baseURL}/api/posts`, {
+    const addPost = await fetch(`/api/posts`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -47,7 +44,7 @@ const handleAddComment = createAsyncThunk(
   async ({ idPost, formComment: form }) => {
     try {
       const addComment = await fetch(
-        `${baseURL}/api/posts/${idPost}/comments`,
+        `/api/posts/${idPost}/comments`,
         {
           method: "POST",
           headers: {
@@ -65,7 +62,7 @@ const handleAddComment = createAsyncThunk(
 );
 const handleGetPosts = createAsyncThunk("posts/GetPosts", async () => {
   try {
-    const posts = await fetch("http://localhost:3000/api/posts").then((data) =>
+    const posts = await fetch("/api/posts").then((data) =>
       data.json()
     );
     return posts;
@@ -78,7 +75,7 @@ const handleGetComments = createAsyncThunk(
   async (idPost) => {
     try {
       const comments = await fetch(
-        `${baseURL}/api/posts/${idPost}/comments`
+        `/api/posts/${idPost}/comments`
       ).then((r) => r.json());
       return comments;
     } catch (error) {
@@ -91,13 +88,13 @@ const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
   try {
     if (data.idLove) {
       await fetch(
-        `${baseURL}/api/posts/${data.idPost}/loves/${data.idLove}`,
+        `/api/posts/${data.idPost}/loves/${data.idLove}`,
         {
           method: "DELETE",
         }
       );
     } else {
-      await fetch(`${baseURL}/api/posts/${data.idPost}/loves`, {
+      await fetch(`/api/posts/${data.idPost}/loves`, {
         method: "POST",
         headers: {
           Accept: "application/json",
