@@ -118,6 +118,9 @@ const postSlice = createSlice({
     handleRenderPosts: (state, action) => {
       state.value.renderPosts = !state.value.renderPosts;
     },
+    handleClearComments:(state,action)=>{
+      state.value.comments= []
+    }
   },
   extraReducers: {
     [handleAddPost.pending]: (state) => {
@@ -165,7 +168,7 @@ const postSlice = createSlice({
   },
 });
 
-export const { handleModalComment, handleLoading, handleRenderPosts } =
+export const { handleModalComment, handleLoading, handleRenderPosts, handleClearComments } =
   postSlice.actions;
 export {
   handleAddPost,

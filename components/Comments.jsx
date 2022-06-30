@@ -2,18 +2,26 @@ import React, { useEffect, useState } from "react";
 import Modal from "../layout/Modal";
 import AddData from "./AddData";
 import UserInfo from "./UserInfo";
-import { handleGetComments } from "../redux/features/postSlice";
+import {
+  handleGetComments,
+  handleClearComments,
+} from "../redux/features/postSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Comments = ({ dataPost, handleModalComment }) => {
   const dispatch = useDispatch();
   const comments = useSelector((state) => state.post.value.comments);
   const [render, setRender] = useState(false);
-  
+
   useEffect(() => {
     dispatch(handleGetComments(dataPost.id));
   }, [render]);
-
+  
+  useEffect(() => {
+    return () => {
+      dispatch(handleClearComments());
+    };
+  }, []);
   return (
     <Modal
       handleCloseModal={handleModalComment}
@@ -29,11 +37,12 @@ const Comments = ({ dataPost, handleModalComment }) => {
           <UserInfo data={dataPost} />
         </div>
 
-        {comments[0]&&comments.map((comment, i) => (
-          <div key={i}>
-            <UserInfo data={comment} />
-          </div>
-        ))}
+        {comments[0] &&
+          comments.map((comment, i) => (
+            <div key={i}>
+              <UserInfo data={comment} />
+            </div>
+          ))}
       </div>
       <AddData
         type="comment"
