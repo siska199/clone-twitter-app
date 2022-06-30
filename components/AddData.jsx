@@ -116,7 +116,7 @@ const AddData = ({ type, idPost, setRender, render }) => {
         <div className="flex justify-between  items-center">
           {type == "post" && (
             <ul className="flex gap-[0.2rem]">
-              {iconInputs.map((data, i) => (
+              {iconInputs[0]&&iconInputs.map((data, i) => (
                 <li
                   onClick={() => handleClickIcon(data.name)}
                   key={i}

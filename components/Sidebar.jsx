@@ -17,7 +17,7 @@ const Sidebar = () => {
             <BsTwitter size="1.7rem" className="" />
           </button>
           <div className="flex sm:block justify-between">
-            {menuIcons.map((data, i) => (
+            {menuIcons[0] && menuIcons.map((data, i) => (
               <Icon key={i} data={data} />
             ))}
             <button

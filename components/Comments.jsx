@@ -29,7 +29,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
           <UserInfo data={dataPost} />
         </div>
 
-        {comments.map((comment, i) => (
+        {comments[0]&&comments.map((comment, i) => (
           <div key={i}>
             <UserInfo data={comment} />
           </div>

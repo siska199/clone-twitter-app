@@ -6,7 +6,7 @@ const Trends = () => {
     <section className="px-10">
       <div className="bg-zinc-800  rounded-xl pt-5 flex flex-col">
         <h1 className="px-5 mb-2 text-[1.3rem] font-bold">Trends For You</h1>
-        {dataTrends.map((data, i) => (
+        {dataTrends[0]&&dataTrends.map((data, i) => (
           <div
             onClick={() => alert("Oke gais")}
             key={i}

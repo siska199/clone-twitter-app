@@ -13,7 +13,7 @@ const Select = ({ label, style, data,handleOnChange }) => {
         ref={selectRef}
         className="w-full cursor-pointer h-3/4 px-1 text-lg bg-black bg-transparent outline-none rounded-lg"
       >
-        {data.map((data, i) => (
+        {data[0]&&data.map((data, i) => (
           <option key={i} value={data}>
             {data}
           </option>

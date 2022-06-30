@@ -21,7 +21,7 @@ const Feeds = () => {
         <BsStars size="1.5rem" />
       </nav>
       <AddData type="post" />
-      {posts.map((data, i) => (
+      {posts[0]&&posts.map((data, i) => (
         <Post key={i} data={data} />
       ))}
     </section>

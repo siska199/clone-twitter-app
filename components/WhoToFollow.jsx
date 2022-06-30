@@ -5,7 +5,7 @@ const WhoToFollow = () => {
     <section className=" px-10 mt-5 ">
       <div className="bg-zinc-800  rounded-xl pt-5 flex flex-col">
         <h1 className="px-5 mb-2 text-[1.3rem] font-bold">Who to follow</h1>
-        {dataWhoToFollow.map((data, i) => (
+        {dataWhoToFollow[0]&&dataWhoToFollow.map((data, i) => (
           <div
             key={i}
             className="cursor-pointer hover:bg-zinc-700 text-slate-300 px-5 py-4 flex justify-between items-center"

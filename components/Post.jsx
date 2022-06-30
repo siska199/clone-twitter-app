@@ -106,7 +106,7 @@ const Post = ({ data, setRender, render }) => {
         </div>
 
         <div className="flex justify-between mt-5">
-          {Icons.map((data, i) => (
+          {Icons[0]&&Icons.map((data, i) => (
             <div
               key={i}
               onClick={() => handleOnclikIcon(data.name)}
