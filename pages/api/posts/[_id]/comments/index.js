@@ -15,7 +15,8 @@ export default async function handler(req, res) {
         .populate("comments.user")
         .select("comments")
         .sort({ "comments.createdAt": -1 })
-        .lean();
+        .lean()
+        .exec()
 
       const comments = getPost.comments
         .map((comment) => ({
