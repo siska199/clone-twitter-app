@@ -8,11 +8,11 @@ import { handleGetPosts } from "../redux/features/postSlice";
 const Feeds = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.post.value.posts);
-  const [render, setRender] = useState(false);
+  const renderPosts = useSelector(state=>state.post.value.renderPosts)
 
   useEffect(() => {
     dispatch(handleGetPosts());
-  }, [render]);
+  }, [renderPosts]);
 
   return (
     <section className="flex-grow lg:flex-[0.9] border-gray-500 border-r-[0.005rem] min-h-[900vh] ">
@@ -20,9 +20,9 @@ const Feeds = () => {
         <h5 className="text-xl font-bold">Home</h5>
         <BsStars size="1.5rem" />
       </nav>
-      <AddData setRender={setRender} render={render} type="post" />
+      <AddData type="post" />
       {posts.map((data, i) => (
-        <Post setRender={setRender} render={render} key={i} data={data} />
+        <Post key={i} data={data} />
       ))}
     </section>
   );

@@ -9,8 +9,8 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { handleLike } from "../redux/features/postSlice";
+import { useDispatch} from "react-redux";
+import { handleLike, handleRenderPosts } from "../redux/features/postSlice";
 
 const Post = ({ data, setRender, render }) => {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const Post = ({ data, setRender, render }) => {
             idPost: data._id,
             idLove: data.likeData ? data.likeData._id : "",
           })
-        ).then(() => setRender(!render));
+        ).then(() => dispatch(handleRenderPosts()));
         break;
       case "comment":
         handleModalComment();
@@ -126,10 +126,10 @@ const Post = ({ data, setRender, render }) => {
           dataPost={{
             id: data._id,
             image: data.user.image,
-            name : data.user.name,
+            name: data.user.name,
             username: data.user.username,
             tweet: data.tweet,
-            createdAt:data.createdAt
+            createdAt: data.createdAt,
           }}
         />
       )}

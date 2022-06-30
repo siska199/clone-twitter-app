@@ -3,8 +3,9 @@ import { iconInputs } from "../lib/data";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { handleAddPost, handleAddComment } from "../redux/features/postSlice";
+import { handleAddPost, handleAddComment, handleRenderPosts } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
+
 const AddData = ({ type, idPost, setRender, render }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const AddData = ({ type, idPost, setRender, render }) => {
       case "post":
         dispatch(handleAddPost(form)).then(() => {
           setForm(initialValueForm);
-          setRender(!render);
+          dispatch(handleRenderPosts())
         });
         break;
       case "comment":

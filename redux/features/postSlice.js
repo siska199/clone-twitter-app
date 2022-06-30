@@ -6,6 +6,8 @@ const initialState = {
     loading: false,
     posts: [],
     comments: [],
+    loadingAddComment: false,
+    renderPosts: false,
   },
 };
 const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
@@ -113,6 +115,9 @@ const postSlice = createSlice({
     handleModalComment: (state, action) => {
       state.value.modalComment = action.payload;
     },
+    handleRenderPosts: (state, action) => {
+      state.value.renderPosts = !state.value.renderPosts;
+    },
   },
   extraReducers: {
     [handleAddPost.pending]: (state) => {
@@ -148,13 +153,20 @@ const postSlice = createSlice({
     },
     [handleGetComments.rejected]: (state) => {},
 
-    [handleAddComment.pending]: (state) => {},
-    [handleAddComment.fulfilled]: (state, action) => {},
-    [handleAddComment.rejected]: (state) => {},
+    [handleAddComment.pending]: (state) => {
+      state.value.loadingAddComment = true;
+    },
+    [handleAddComment.fulfilled]: (state, action) => {
+      state.value.loadingAddComment = false;
+    },
+    [handleAddComment.rejected]: (state) => {
+      state.value.loadingAddComment = false;
+    },
   },
 });
 
-export const { handleModalComment, handleLoading } = postSlice.actions;
+export const { handleModalComment, handleLoading, handleRenderPosts } =
+  postSlice.actions;
 export {
   handleAddPost,
   handleGetPosts,
