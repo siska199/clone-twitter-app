@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+const baseURL =
+  "https://clone-twitter199.vercel.app/" || "http://localhost:3000";
+
 const initialState = {
   value: {
     modalComment: false,
@@ -23,7 +26,7 @@ const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
         body: formImage,
       }
     ).then((r) => r.json());
-    const addPost = await fetch("http://localhost:3000/api/posts", {
+    const addPost = await fetch(`${baseURL}/api/posts`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -44,7 +47,7 @@ const handleAddComment = createAsyncThunk(
   async ({ idPost, formComment: form }) => {
     try {
       const addComment = await fetch(
-        `http://localhost:3000/api/posts/${idPost}/comments`,
+        `${baseURL}/api/posts/${idPost}/comments`,
         {
           method: "POST",
           headers: {
@@ -75,7 +78,7 @@ const handleGetComments = createAsyncThunk(
   async (idPost) => {
     try {
       const comments = await fetch(
-        `http://localhost:3000/api/posts/${idPost}/comments`
+        `${baseURL}/api/posts/${idPost}/comments`
       ).then((r) => r.json());
       return comments;
     } catch (error) {
@@ -88,13 +91,13 @@ const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
   try {
     if (data.idLove) {
       await fetch(
-        `http://localhost:3000/api/posts/${data.idPost}/loves/${data.idLove}`,
+        `${baseURL}/api/posts/${data.idPost}/loves/${data.idLove}`,
         {
           method: "DELETE",
         }
       );
     } else {
-      await fetch(`http://localhost:3000/api/posts/${data.idPost}/loves`, {
+      await fetch(`${baseURL}/api/posts/${data.idPost}/loves`, {
         method: "POST",
         headers: {
           Accept: "application/json",
