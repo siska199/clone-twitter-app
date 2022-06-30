@@ -14,18 +14,20 @@ export default async function handler(req, res) {
         .find()
         .populate("user")
         .sort("-createdAt")
-        .lean();
+        .lean()
+        .exec()
 
-      // const modifiedData = data.map((post) => {
-      //   return {
-      //     ...post,
-      //     likeData: token
-      //       ? post.likes.filter((like) => like.user == token.id)[0]
-      //       : "",
-      //   };
-      // });
+      const modifiedData = data.map((post) => {
+        return {
+          ...post,
+          likeData: token
+            ? post.likes.filter((like) => like.user == token.id)[0]
+            : "",
+        };
+      });
+      
+      res.status(200).json(modifiedData);
 
-      res.status(200).json(data);
     } catch (error) {
       res.status(500).send(`${error}`);
     }
