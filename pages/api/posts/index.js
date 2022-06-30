@@ -16,15 +16,16 @@ export default async function handler(req, res) {
         .sort("-createdAt")
         .lean();
 
-      const modifiedData = data.map((post) => {
-        return {
-          ...post,
-          likeData: token
-            ? post.likes.filter((like) => like.user == token.id)[0]
-            : "",
-        };
-      });
-      res.status(200).json(modifiedData);
+      // const modifiedData = data.map((post) => {
+      //   return {
+      //     ...post,
+      //     likeData: token
+      //       ? post.likes.filter((like) => like.user == token.id)[0]
+      //       : "",
+      //   };
+      // });
+
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).send(`${error}`);
     }
