@@ -26,7 +26,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
     <Modal
       handleCloseModal={handleModalComment}
       type="modal-comments"
-      style="md:w-[40rem] md:h-auto h-full py-5 no-scrollbar flex flex-col overflow-y-scroll md:rounded-3xl"
+      style="md:w-[40rem] h-auto  py-5 no-scrollbar flex flex-col overflow-y-scroll md:rounded-3xl"
     >
       <div
         className={`${
