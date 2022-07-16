@@ -66,8 +66,8 @@ const Post = ({ data, setRender, render }) => {
   };
 
   return (
-    <section className="flex py-4 gap-3 w-full px-3">
-      <div>
+    <section className="flex py-4 sm:gap-3 justify-between w-full px-3 ">
+      <div className="flex">
         <img
           className="md:h-[3rem]  md:w-[3rem] h-[3rem] w-[3rem] object-cover rounded-full "
           src={data.user.image}
@@ -75,7 +75,7 @@ const Post = ({ data, setRender, render }) => {
         />
         <UserSumInfo />
       </div>
-      <div className="flex flex-col ">
+      <div className="flex flex-col w-[80%] sm:w-full">
         <div className="flex flex-wrap mb-3 sm:mb-0 w-full sm:flex-nowrap gap-2 items-center tracking truncate">
           <h1 className=" md:text-lg text-md font-semibold text-ellipsis overflow-hidden">
             {data.user.name}
