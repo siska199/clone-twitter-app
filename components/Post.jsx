@@ -66,18 +66,18 @@ const Post = ({ data, setRender, render }) => {
   };
 
   return (
-    <section className="flex py-4 gap-3 w-full">
+    <section className="flex py-4 gap-3 w-full px-3">
       <div>
         <img
-          className="md:h-[3rem] ml-6 md:w-[3rem] h-[2rem] w-[2rem] object-cover rounded-full "
+          className="md:h-[3rem]  md:w-[3rem] h-[3rem] w-[3rem] object-cover rounded-full "
           src={data.user.image}
           alt=""
         />
         <UserSumInfo />
       </div>
-      <div className="flex flex-col w-[80%] ">
-        <div className="flex gap-2 items-center tracking truncate">
-          <h1 className=" md:text-lg text-md  font-semibold text-ellipsis overflow-hidden">
+      <div className="flex flex-col ">
+        <div className="flex flex-wrap mb-3 sm:mb-0 w-full sm:flex-nowrap gap-2 items-center tracking truncate">
+          <h1 className=" md:text-lg text-md font-semibold text-ellipsis overflow-hidden">
             {data.user.name}
           </h1>
 
@@ -87,19 +87,19 @@ const Post = ({ data, setRender, render }) => {
             <span className="text-sm text-ellipsis overflow-hidden">
               {<ReactTimeAgo date={Date.parse(data.createdAt)} />}
             </span>
+            <span className="hover:bg-gray-900 ml-auto p-1 rounded-full">
+              <TbDots className=" text-lg hover:text-sky-600 cursor-pointer " />
+            </span>
           </p>
-          <span className="hover:bg-gray-900 ml-auto p-1 rounded-full">
-            <TbDots className=" text-lg hover:text-sky-600 cursor-pointer " />
-          </span>
         </div>
 
-        <p className="md:text-[0.95rem] text-sm md:leading-[1.2rem] font-thin text-justify">
+        <p className="md:text-[0.95rem] mb-3 text-sm md:leading-[1.2rem] font-thin text-justify">
           {data.tweet}
         </p>
 
-        <div className="flex mt-3">
+        <div className="flex">
           <img
-            className="max-h-[25rem] object-cover rounded-3xl border-[0.05rem] border-gray-500"
+            className="max-h-[15rem] sm:max-h-[25rem] object-cover rounded-3xl border-[0.05rem] border-gray-500"
             src={data.image}
             alt=""
           />
