@@ -4,7 +4,7 @@ const Layout = ({ children, title,customeStyle}) => {
   return (
     <>
       <Head>
-        <title>Twitter-Clone-Siska199 | {title}</title>
+        <title>Twitter clone siska199 | {title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`bg-black `}>
