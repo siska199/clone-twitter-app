@@ -11,7 +11,7 @@ const UserInfo = ({ data }) => {
         alt=""
       />{" "}
       <div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap sm:flex-wrap-none gap-2 mb-3 sm:mb-0">
           <h1 className="text-md font-semibold">{data.name}</h1>
           <p className="flex text-sm items-center font-thin text-slate-400 ">
             @{data.username} <BsDot />
