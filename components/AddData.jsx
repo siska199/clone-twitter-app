@@ -3,10 +3,16 @@ import { iconInputs } from "../lib/data";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { handleAddPost, handleAddComment, handleRenderPosts } from "../redux/features/postSlice";
+import {
+  handleAddPost,
+  handleAddComment,
+  handleGetPosts,
+  handleResetPosts,
+  handleGetComments,
+} from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
 
-const AddData = ({ type, idPost, setRender, render }) => {
+const AddData = ({ type, idPost }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
   const imgRef = useRef(null);
@@ -49,7 +55,8 @@ const AddData = ({ type, idPost, setRender, render }) => {
       case "post":
         dispatch(handleAddPost(form)).then(() => {
           setForm(initialValueForm);
-          dispatch(handleRenderPosts())
+          dispatch(handleResetPosts());
+          dispatch(handleGetPosts(true));
         });
         break;
       case "comment":
@@ -58,7 +65,7 @@ const AddData = ({ type, idPost, setRender, render }) => {
         };
         dispatch(handleAddComment({ idPost, formComment })).then(() => {
           setForm(initialValueForm);
-          setRender(!render);
+          dispatch(handleGetComments(idPost));
         });
         break;
       default:
@@ -116,27 +123,28 @@ const AddData = ({ type, idPost, setRender, render }) => {
         <div className="flex justify-between  items-center">
           {type == "post" && (
             <ul className="flex gap-[0.2rem]">
-              {iconInputs[0]&&iconInputs.map((data, i) => (
-                <li
-                  onClick={() => handleClickIcon(data.name)}
-                  key={i}
-                  className={`${i == 4 && "hidden md:block"} ${
-                    i == 2 && "hidden md:block"
-                  }  text-lg text-sky-600 cursor-pointer hover:bg-gray-900 p-2 rounded-full my-3`}
-                >
-                  {data.icon}
-                  {data.name == "picture" && (
-                    <input
-                      ref={imgRef}
-                      onChange={(e) => handleOnchange(e)}
-                      type="file"
-                      accept=".png, .jpg, .jpeg"
-                      name="image"
-                      hidden
-                    />
-                  )}
-                </li>
-              ))}
+              {iconInputs[0] &&
+                iconInputs.map((data, i) => (
+                  <li
+                    onClick={() => handleClickIcon(data.name)}
+                    key={i}
+                    className={`${i == 4 && "hidden md:block"} ${
+                      i == 2 && "hidden md:block"
+                    }  text-lg text-sky-600 cursor-pointer hover:bg-gray-900 p-2 rounded-full my-3`}
+                  >
+                    {data.icon}
+                    {data.name == "picture" && (
+                      <input
+                        ref={imgRef}
+                        onChange={(e) => handleOnchange(e)}
+                        type="file"
+                        accept=".png, .jpg, .jpeg"
+                        name="image"
+                        hidden
+                      />
+                    )}
+                  </li>
+                ))}
             </ul>
           )}
           <button

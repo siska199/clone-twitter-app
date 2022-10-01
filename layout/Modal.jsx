@@ -1,15 +1,15 @@
 import React from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { handleRenderPosts } from "../redux/features/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { handleGetPosts } from "../redux/features/postSlice";
 
 const Modal = ({ children, handleCloseModal, style, type }) => {
-  const dispatch = useDispatch()
-
-  const handleClose = ()=>{
-    handleCloseModal()
-    type=="modal-comments" && dispatch(handleRenderPosts())
-  }
+  const dispatch = useDispatch();
+  const page = useSelector((state) => state.post.value.page);
+  const handleClose = () => {
+    handleCloseModal();
+    type == "modal-comments" && dispatch(handleGetPosts(page));
+  };
   return (
     <article className="h-full z-[99] w-full fixed top-0 left-0 flex backdrop-invert backdrop-opacity-5 bg-black/20 items-center justify-center">
       <div className={`bg-black p-5 ${style}`}>

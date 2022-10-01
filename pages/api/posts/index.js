@@ -6,17 +6,23 @@ const secret = process.env.JWT_SECRET;
 export default async function handler(req, res) {
   await dbConnect();
   const token = await getToken({ req, secret });
-  const { method, body } = req;
-
+  const {
+    method,
+    body,
+    query: { page, skip },
+  } = req;
   if (method == "GET") {
     try {
+      const limit = 5;
       const data = await posts
         .find()
         .populate("user")
         .sort("-createdAt")
+        .skip(JSON.parse(skip) ? (page - 1) * limit : 0)
+        .limit(JSON.parse(skip)?limit:false)
         .lean()
-        .exec()
-
+        .exec();
+      const totalData = await posts.countDocuments();
       const modifiedData = data.map((post) => {
         return {
           ...post,
@@ -25,9 +31,11 @@ export default async function handler(req, res) {
             : "",
         };
       });
-      
-      res.status(200).json(modifiedData);
-
+      res.status(200).json({
+        data: modifiedData,
+        hasMore:JSON.parse(skip)?  totalData >= page * limit ? true : false : false,
+        page: Number(page) + 1,
+      });
     } catch (error) {
       res.status(500).send(`${error}`);
     }

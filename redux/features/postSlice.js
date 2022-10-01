@@ -4,7 +4,11 @@ const initialState = {
   value: {
     modalComment: false,
     loading: false,
+
     posts: [],
+    hasMore: true,
+    page: 1,
+
     comments: [],
     loadingAddComment: false,
     renderPosts: false,
@@ -23,7 +27,8 @@ const handleAddPost = createAsyncThunk("post/AddPost", async (form) => {
         body: formImage,
       }
     ).then((r) => r.json());
-    const addPost = await fetch(`/api/posts`, {
+    const page = 1;
+    const addPost = await fetch(`/api/posts?page=${page}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -43,40 +48,42 @@ const handleAddComment = createAsyncThunk(
   "posts/addComment",
   async ({ idPost, formComment: form }) => {
     try {
-      const addComment = await fetch(
-        `/api/posts/${idPost}/comments`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      ).then((r) => r.json());
+      const addComment = await fetch(`/api/posts/${idPost}/comments`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      }).then((r) => r.json());
       return addComment;
     } catch (error) {
       return error;
     }
   }
 );
-const handleGetPosts = createAsyncThunk("posts/GetPosts", async () => {
-  try {
-    const posts = await fetch("/api/posts").then((data) =>
-      data.json()
-    );
-    return posts;
-  } catch (error) {
-    return error;
+const handleGetPosts = createAsyncThunk(
+  "posts/GetPosts",
+  async (skip=true, { getState }) => {
+    try {
+      const page = getState().post.value.page;
+      console.log("page: ", page);
+      const posts = await fetch(`/api/posts?page=${page}&&skip=${skip}`).then((data) =>
+        data.json()
+      );
+      return posts;
+    } catch (error) {
+      return error;
+    }
   }
-});
+);
 const handleGetComments = createAsyncThunk(
   "/posts/getComments",
   async (idPost) => {
     try {
-      const comments = await fetch(
-        `/api/posts/${idPost}/comments`
-      ).then((r) => r.json());
+      const comments = await fetch(`/api/posts/${idPost}/comments`).then((r) =>
+        r.json()
+      );
       return comments;
     } catch (error) {
       return error;
@@ -87,12 +94,9 @@ const handleGetComments = createAsyncThunk(
 const handleLike = createAsyncThunk("post/addRemoveLike", async (data) => {
   try {
     if (data.idLove) {
-      await fetch(
-        `/api/posts/${data.idPost}/loves/${data.idLove}`,
-        {
-          method: "DELETE",
-        }
-      );
+      await fetch(`/api/posts/${data.idPost}/loves/${data.idLove}`, {
+        method: "DELETE",
+      });
     } else {
       await fetch(`/api/posts/${data.idPost}/loves`, {
         method: "POST",
@@ -118,9 +122,13 @@ const postSlice = createSlice({
     handleRenderPosts: (state, action) => {
       state.value.renderPosts = !state.value.renderPosts;
     },
-    handleClearComments:(state,action)=>{
-      state.value.comments= []
-    }
+    handleClearComments: (state, action) => {
+      state.value.comments = [];
+    },
+    handleResetPosts: (state, action) => {
+      state.value.posts = [];
+      state.value.page = 1;
+    },
   },
   extraReducers: {
     [handleAddPost.pending]: (state) => {
@@ -138,7 +146,12 @@ const postSlice = createSlice({
     },
     [handleGetPosts.fulfilled]: (state, action) => {
       state.value.loading = false;
-      state.value.posts = action.payload;
+      state.value.posts =
+        action.payload.page == 2
+          ? action.payload.data
+          : [...state.value.posts, ...action.payload.data];
+      state.value.hasMore = action.payload.hasMore;
+      state.value.page = action.payload.page;
     },
     [handleGetPosts.rejected]: (state) => {
       state.value.loading = false;
@@ -168,8 +181,13 @@ const postSlice = createSlice({
   },
 });
 
-export const { handleModalComment, handleLoading, handleRenderPosts, handleClearComments } =
-  postSlice.actions;
+export const {
+  handleModalComment,
+  handleLoading,
+  handleRenderPosts,
+  handleClearComments,
+  handleResetPosts,
+} = postSlice.actions;
 export {
   handleAddPost,
   handleGetPosts,

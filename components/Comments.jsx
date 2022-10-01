@@ -3,7 +3,6 @@ import Modal from "../layout/Modal";
 import AddData from "./AddData";
 import UserInfo from "./UserInfo";
 import {
-  handleGetComments,
   handleClearComments,
 } from "../redux/features/postSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +12,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
   const comments = useSelector((state) => state.post.value.comments);
   const [render, setRender] = useState(false);
 
-  useEffect(() => {
-    dispatch(handleGetComments(dataPost.id));
-  }, [render]);
-  
+
   useEffect(() => {
     return () => {
       dispatch(handleClearComments());

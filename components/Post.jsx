@@ -9,18 +9,22 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { useDispatch} from "react-redux";
-import { handleLike, handleRenderPosts } from "../redux/features/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  handleGetComments,
+  handleGetPosts,
+  handleLike,
+  handleResetPosts,
+} from "../redux/features/postSlice";
 
-const Post = ({ data, setRender, render }) => {
+const Post = React.forwardRef(({ data }, ref) => {
   const dispatch = useDispatch();
   const [modalComment, setModalComment] = useState(false);
-
   const Icons = [
     {
       name: "comment",
       icon: <GoComment />,
-      data: data.comments.length,
+      data: data.comments?.length,
       style: "text-sky-600",
     },
     {
@@ -32,7 +36,7 @@ const Post = ({ data, setRender, render }) => {
     {
       name: "love",
       icon: data.likeData ? <AiFillHeart /> : <BsHeart />,
-      data: data.likes.length,
+      data: data.likes?.length,
       style: `text-sky-600 ${data.likeData && "!text-rose-600"}`,
     },
     {
@@ -51,7 +55,10 @@ const Post = ({ data, setRender, render }) => {
             idPost: data._id,
             idLove: data.likeData ? data.likeData._id : "",
           })
-        ).then(() => dispatch(handleRenderPosts()));
+        ).then(async () => {
+          dispatch(handleResetPosts());
+          dispatch(handleGetPosts(false));
+        });
         break;
       case "comment":
         handleModalComment();
@@ -62,15 +69,26 @@ const Post = ({ data, setRender, render }) => {
   };
 
   const handleModalComment = () => {
-    setModalComment(!modalComment);
+    dispatch(handleGetComments(data._id));
+    setModalComment(prev=>{
+      if(prev){
+        dispatch(handleResetPosts());
+        dispatch(handleGetPosts());
+      }
+      return !modalComment
+    });
+    
   };
 
   return (
-    <section className="flex py-4 sm:gap-3 justify-between w-full px-3 ">
+    <section
+      ref={ref}
+      className="flex py-4 sm:gap-3 justify-between w-full px-3 "
+    >
       <div className="flex">
         <img
           className="md:h-[3rem]  md:w-[3rem] h-[3rem] w-[3rem] object-cover rounded-full "
-          src={data.user.image}
+          src={data.user?.image}
           alt=""
         />
         <UserSumInfo />
@@ -78,11 +96,11 @@ const Post = ({ data, setRender, render }) => {
       <div className="flex flex-col w-[80%] sm:w-full">
         <div className="flex flex-wrap mb-3 sm:mb-0 w-full sm:flex-nowrap gap-2 items-center tracking truncate">
           <h1 className=" md:text-lg text-md font-semibold text-ellipsis overflow-hidden">
-            {data.user.name}
+            {data.user?.name}
           </h1>
 
           <p className="font-thin text-slate-400 flex items-center text-ellipsis overflow-hidden">
-            @{data.user.username}
+            @{data.user?.username}
             <BsDot />
             <span className="text-sm text-ellipsis overflow-hidden">
               {<ReactTimeAgo date={Date.parse(data.createdAt)} />}
@@ -106,18 +124,19 @@ const Post = ({ data, setRender, render }) => {
         </div>
 
         <div className="flex justify-between mt-5">
-          {Icons[0]&&Icons.map((data, i) => (
-            <div
-              key={i}
-              onClick={() => handleOnclikIcon(data.name)}
-              className={`flex cursor-pointer group gap-2 hover:${data.style} items-center font-thin text-slate-400`}
-            >
-              <span className="group-hover:bg-gray-900 p-[0.5rem] text-lg rounded-full ">
-                {data.icon}
-              </span>
-              <span>{data.data}</span>
-            </div>
-          ))}
+          {Icons[0] &&
+            Icons.map((data, i) => (
+              <div
+                key={i}
+                onClick={() => handleOnclikIcon(data.name)}
+                className={`flex cursor-pointer group gap-2 hover:${data.style} items-center font-thin text-slate-400`}
+              >
+                <span className="group-hover:bg-gray-900 p-[0.5rem] text-lg rounded-full ">
+                  {data.icon}
+                </span>
+                <span>{data.data}</span>
+              </div>
+            ))}
         </div>
       </div>
       {modalComment && (
@@ -135,5 +154,5 @@ const Post = ({ data, setRender, render }) => {
       )}
     </section>
   );
-};
+});
 export default Post;
