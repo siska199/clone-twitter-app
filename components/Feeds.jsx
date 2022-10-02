@@ -4,12 +4,14 @@ import AddData from "./AddData";
 import Post from "./Post";
 import { useDispatch, useSelector } from "react-redux";
 import { handleGetPosts, handleResetPosts } from "../redux/features/postSlice";
+import { useSession, signOut } from "next-auth/react";
 
 const Feeds = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.post.value.posts);
   const hasMore = useSelector((state) => state.post.value.hasMore);
   const postRef = useRef(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleIntersection, {
@@ -37,7 +39,17 @@ const Feeds = () => {
   return (
     <section className="flex-grow lg:flex-[0.9] border-gray-500 border-r-[0.005rem]">
       <nav className="px-4 flex h-[4rem] items-center justify-between top-0 sticky bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm">
-        <h5 className="text-xl font-bold">Home</h5>
+        <img
+          onClick={() => signOut()}
+          src={session?.user?.image}
+          alt=""
+          className="w-[2.5rem] h-[2.5rem] border-[0.005rem] sm:hidden rounded-full"
+        />
+        <img
+          src="assets/logo-twitter.webp"
+          className="w-[2.5rem] h-[2.5rem] sm:hidden"
+        />
+        <h5 className="text-xl hidden sm:block font-bold">Home</h5>
         <BsStars size="1.5rem" />
       </nav>
       <AddData type="post" />

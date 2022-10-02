@@ -12,7 +12,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
   const comments = useSelector((state) => state.post.value.comments);
   const [render, setRender] = useState(false);
 
-
+  console.log("comments: ", comments)
   useEffect(() => {
     return () => {
       dispatch(handleClearComments());
@@ -26,14 +26,14 @@ const Comments = ({ dataPost, handleModalComment }) => {
     >
       <div
         className={`${
-          comments.length > 4 ? "h-[20rem]" : "h-auto"
+          comments?.length > 4 ? "h-[20rem]" : "h-auto"
         } overflow-scroll no-scrollbar my-5`}
       >
         <div className="sticky top-0 bg-black border-b-[0.005rem]">
           <UserInfo data={dataPost} />
         </div>
 
-        {comments[0] &&
+        {comments?.length>0 && 
           comments.map((comment, i) => (
             <div key={i}>
               <UserInfo data={comment} />

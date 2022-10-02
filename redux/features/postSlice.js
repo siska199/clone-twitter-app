@@ -67,7 +67,6 @@ const handleGetPosts = createAsyncThunk(
   async (skip=true, { getState }) => {
     try {
       const page = getState().post.value.page;
-      console.log("page: ", page);
       const posts = await fetch(`/api/posts?page=${page}&&skip=${skip}`).then((data) =>
         data.json()
       );

@@ -16,6 +16,7 @@ import {
   handleLike,
   handleResetPosts,
 } from "../redux/features/postSlice";
+import { handleDownloadImage } from "../lib/function";
 
 const Post = React.forwardRef(({ data }, ref) => {
   const dispatch = useDispatch();
@@ -63,6 +64,9 @@ const Post = React.forwardRef(({ data }, ref) => {
       case "comment":
         handleModalComment();
         break;
+      case "download":
+        await handleDownloadImage(data?.image);
+        break;
       default:
         return "";
     }
@@ -70,14 +74,13 @@ const Post = React.forwardRef(({ data }, ref) => {
 
   const handleModalComment = () => {
     dispatch(handleGetComments(data._id));
-    setModalComment(prev=>{
-      if(prev){
+    setModalComment((prev) => {
+      if (prev) {
         dispatch(handleResetPosts());
         dispatch(handleGetPosts());
       }
-      return !modalComment
+      return !modalComment;
     });
-    
   };
 
   return (

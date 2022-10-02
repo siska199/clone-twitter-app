@@ -26,7 +26,6 @@ const SignIn = ({ providers }) => {
   const handleSignIn = (e, id) => {
     e.preventDefault();
     if (id) return signIn(id);
-    console.log("form sign in: ", form)
   };
   return (
     <Modal
