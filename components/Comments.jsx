@@ -12,7 +12,6 @@ const Comments = ({ dataPost, handleModalComment }) => {
   const comments = useSelector((state) => state.post.value.comments);
   const [render, setRender] = useState(false);
 
-  console.log("comments: ", comments)
   useEffect(() => {
     return () => {
       dispatch(handleClearComments());
