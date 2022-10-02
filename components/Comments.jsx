@@ -21,7 +21,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
     <Modal
       handleCloseModal={handleModalComment}
       type="modal-comments"
-      style="md:w-[40rem] h-auto  py-5 no-scrollbar flex flex-col overflow-y-scroll md:rounded-3xl"
+      style="md:w-[40rem] h-auto   py-5 no-scrollbar flex flex-col overflow-y-scroll md:rounded-3xl"
     >
       <div
         className={`${
@@ -34,7 +34,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
 
         {comments?.length>0 && 
           comments.map((comment, i) => (
-            <div key={i}>
+            <div key={i} className="">
               <UserInfo data={comment} />
             </div>
           ))}

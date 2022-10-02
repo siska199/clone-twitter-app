@@ -6,6 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 const Sidebar = () => {
   const { data: session } = useSession();
 
@@ -17,9 +18,10 @@ const Sidebar = () => {
             <BsTwitter size="1.7rem" className="" />
           </button>
           <div className="flex sm:block justify-between">
-            {menuIcons[0] && menuIcons.map((data, i) => (
-              <Icon key={i} data={data} />
-            ))}
+            {menuIcons[0] &&
+              menuIcons.map((data, i) => (
+                  <Icon key={i} data={data} />
+              ))}
             <button
               className={`flex sm:hidden gap-4  cursor-pointer rounded-full text-white  hover:bg-zinc-900 w-auto  justify-start items-center px-3 py-[0.7rem] text-[1.2rem]`}
             >
