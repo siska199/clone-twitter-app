@@ -11,7 +11,14 @@ import {
   handleGetComments,
 } from "../redux/features/postSlice";
 import { useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 
+const EmojiPicker = dynamic(
+  () => {
+    return import("emoji-picker-react");
+  },
+  { ssr: false }
+);
 const AddData = ({ type, idPost }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
@@ -22,9 +29,11 @@ const AddData = ({ type, idPost }) => {
     image: null,
   };
   const [form, setForm] = useState(initialValueForm);
+  const [seeEmoji, setSeeEmoji] = useState(false);
 
   const handleClickIcon = (name) => {
     if (name == "picture") return imgRef.current.click();
+    if (name == "emoji") return setSeeEmoji(!seeEmoji);
   };
   const handleCloseImage = () => {
     setUrlFile(null);
@@ -48,7 +57,13 @@ const AddData = ({ type, idPost }) => {
         e.target.name == "image" ? e.target.files[0] : e.target.value,
     });
   };
-
+  const handleOnClickEmoji = (data, event) => {
+    event.stopPropagation();
+    setForm({
+      ...form,
+      tweet: `${form.tweet}${data.emoji}`,
+    });
+  };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     switch (type) {
@@ -130,7 +145,7 @@ const AddData = ({ type, idPost }) => {
                     key={i}
                     className={`${i == 4 && "hidden md:block"} ${
                       i == 2 && "hidden md:block"
-                    }  text-lg text-sky-600 cursor-pointer hover:bg-gray-900 p-2 rounded-full my-3`}
+                    }  text-lg relative text-sky-600 cursor-pointer hover:bg-gray-900 p-2 rounded-full my-3`}
                   >
                     {data.icon}
                     {data.name == "picture" && (
@@ -142,6 +157,13 @@ const AddData = ({ type, idPost }) => {
                         name="image"
                         hidden
                       />
+                    )}
+                    {data.name == "emoji" && (
+                      <div className="absolute top-[2.5rem] -left-[8rem]">
+                        {seeEmoji && (
+                          <EmojiPicker onEmojiClick={handleOnClickEmoji} />
+                        )}
+                      </div>
                     )}
                   </li>
                 ))}
