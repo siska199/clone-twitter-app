@@ -3,10 +3,16 @@ import dbConnect from "../../../lib/dbConnect";
 
 export default async function handler(req, res) {
   await dbConnect();
-  const { method, body } = req;
+  const {
+    method,
+    body,
+    query: { q },
+  } = req;
   if (method == "GET") {
     try {
-      const getUsers = await users.find();
+      const getUsers = await users.find({
+        username: { $regex: q },
+      });
       res.status(200).json(getUsers);
     } catch (error) {
       res.status(500).send(error);

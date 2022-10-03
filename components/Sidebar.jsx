@@ -6,7 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+
 const Sidebar = () => {
   const { data: session } = useSession();
 
