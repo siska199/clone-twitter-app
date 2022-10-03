@@ -1,6 +1,7 @@
 import React from "react";
 import { dataTrends } from "../lib/data";
 import { BsThreeDots } from "react-icons/bs";
+
 const Trends = () => {
   return (
     <section className="px-10">

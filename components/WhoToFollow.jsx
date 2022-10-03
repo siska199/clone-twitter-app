@@ -2,7 +2,8 @@ import React from "react";
 import { dataWhoToFollow } from "../lib/data";
 const WhoToFollow = () => {
   return (
-    <section className=" px-10 mt-5">
+    <section className=" px-10 mt-5
+    ">
       <div className="bg-zinc-800  rounded-xl pt-5 flex flex-col">
         <h1 className="px-5 mb-2 text-[1.3rem] font-bold">Who to follow</h1>
         {dataWhoToFollow[0]&&dataWhoToFollow.map((data, i) => (

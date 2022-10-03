@@ -18,7 +18,7 @@ const HomePage = () => {
       <Feeds />
       <div className="hidden lg:flex flex-[0.5] flex-col w-full gap-5 ">
         <Search />
-        <div className="sticky top-[6rem]">
+        <div className="">
           <Trends />
           <WhoToFollow />
           <p className="pl-14 pr-10 leading-2  text-[0.8rem] font-thin my-5  text-gray-400">
