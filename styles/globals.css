@@ -41,6 +41,9 @@
     .container{
         @apply max-w-[1500px] min-h-screen m-auto bg-black text-gray-100;
     }
+    .text{
+        @apply text-slate-400 font-thin
+    }
 }
 @layer utilities {
     /* Chrome, Safari and Opera */

@@ -64,14 +64,16 @@ const handleAddComment = createAsyncThunk(
 );
 const handleGetPosts = createAsyncThunk(
   "posts/GetPosts",
-  async (skip=true, { getState }) => {
+  async (skip = true, { getState }) => {
     try {
       const page = getState().post.value.page;
-      const posts = await fetch(`/api/posts?page=${page}&&skip=${skip}`).then((data) =>
-        data.json()
+      const posts = await fetch(`/api/posts?page=${page}&&skip=${skip}`).then(
+        (data) => data.json()
       );
+      console.log("posts: ", posts);
       return posts;
     } catch (error) {
+      console.log("error :", error);
       return error;
     }
   }

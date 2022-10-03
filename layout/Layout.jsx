@@ -1,6 +1,9 @@
 import React from "react";
 import Head from "next/head";
-const Layout = ({ children, title,customeStyle}) => {
+import Sidebar from "../components/Sidebar";
+import RightBar from "../components/Rightbar";
+
+const Layout = ({ children, title, customeStyle }) => {
   return (
     <>
       <Head>
@@ -8,9 +11,13 @@ const Layout = ({ children, title,customeStyle}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`bg-black `}>
-        <article className={`container ${customeStyle}`}>
-          {children}
-          </article>
+        <article className={`container ${customeStyle} `}>
+          {title !== "login" && <Sidebar />}
+          <section className="flex-grow lg:flex-[0.9] border-gray-500 border-r-[0.005rem]">
+             {children}
+          </section>
+          <RightBar />
+        </article>
       </main>
     </>
   );

@@ -37,6 +37,7 @@ export default async function handler(req, res) {
         page: Number(page) + 1,
       });
     } catch (error) {
+      console.log("error: ", error)
       res.status(500).send(`${error}`);
     }
   }

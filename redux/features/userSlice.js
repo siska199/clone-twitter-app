@@ -5,11 +5,12 @@ const initialState = {
     modalSignUp: false,
     modalSignIn: false,
     users: [],
+    profile: null,
   },
 };
 
 let cancelToken;
-const handleQueryUser = createAsyncThunk("users/query-users", async (query) => {
+const handleQueryUser = createAsyncThunk("user/query-users", async (query) => {
   try {
     if (cancelToken) cancelToken.cancel();
 
@@ -20,7 +21,19 @@ const handleQueryUser = createAsyncThunk("users/query-users", async (query) => {
     return {
       users: res.data,
     };
+  } catch (error) {}
+});
+
+const handleGetProfile = createAsyncThunk("user/get-profile", async (id) => {
+  try {
+    console.log("id masok: ", id)
+    const res = await fetch(`/api/users/${id}`).then((res) => res.json());
+    console.log("res: ",res)
+    return {
+      profile: res,
+    };
   } catch (error) {
+    return error;
   }
 });
 
@@ -41,9 +54,15 @@ const userSlice = createSlice({
       state.value.users = action.payload ? action.payload.users : [];
     },
     [handleQueryUser.rejected]: (state) => {},
+
+    [handleGetProfile.pending]: (state) => {},
+    [handleGetProfile.fulfilled]: (state, action) => {
+      state.value.profile = action.payload.profile;
+    },
+    [handleGetProfile.rejected]: (state) => {},
   },
 });
 
 export default userSlice.reducer;
 export const { handleModalSignUp, handleModalSignIn } = userSlice.actions;
-export { handleQueryUser };
+export { handleQueryUser, handleGetProfile };

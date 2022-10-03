@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Layout from "../layout/Layout";
 
 const messages = () => {
   return (
-    <div>messages</div>
-  )
-}
+    <Layout title={"messages"} customeStyle={"flex"}>
+      <h1>PROFILE</h1>
+    </Layout>
+  );
+};
 
-export default messages
+export default messages;

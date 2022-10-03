@@ -33,11 +33,12 @@ const Feeds = () => {
   };
 
   useEffect(() => {
+    console.log("fetch posts")
     dispatch(handleGetPosts());
   }, []);
 
   return (
-    <section className="flex-grow lg:flex-[0.9] border-gray-500 border-r-[0.005rem]">
+    <>
       <nav className="px-4 flex h-[4rem] items-center justify-between top-0 sticky bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm">
         <img
           onClick={() => signOut()}
@@ -61,7 +62,7 @@ const Feeds = () => {
             <Post key={i} data={data} />
           );
         })}
-    </section>
+    </>
   );
 };
 export default Feeds;

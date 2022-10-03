@@ -1,8 +1,11 @@
-import React from 'react'
+import React from "react";
+import Layout from "../layout/Layout";
 
 const notifications = () => {
   return (
-    <div>notifications</div>
-  )
-}
-export default notifications
+    <Layout title={"bookmarks"} customeStyle={"flex"}>
+      <h1>Notifications</h1>
+    </Layout>
+  );
+};
+export default notifications;

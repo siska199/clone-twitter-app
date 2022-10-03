@@ -15,6 +15,7 @@ const Search = () => {
     e.stopPropagation()
     
   }
+  console.log("ref: ", inputRef.current?.value )
   return (
     <nav className="sticky top-0">
       <div className="h-[4rem] px-10 py-2 bg-black flex justify-center items-center relative">
@@ -25,14 +26,12 @@ const Search = () => {
             className="w-full bg-transparent outline-none peer "
             placeholder="Search"
             onChange={() => handleSearch()}
-            // onFocus={()=>setActiveSearch(true)}
-            // onBlur={()=>setActiveSearch(false)}
           />
           <BsSearch className="cursor-pointer peer-focus:text-blue-500 text-orange text-[1.3rem] " />
           <div
             className={`bg-black w-full overflow-y-scroll display flex-col ${
               users.length < 0 ? "max-h-[7rem]" : "max-h-[20rem]"
-            } ${inputRef.current?.value !=""?"!flex":"hidden"} shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] absolute  top-[3.5rem] shadow-[white] rounded-md !z-[99999]`}
+            } ${inputRef.current?.value?"!flex":"hidden"} shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] absolute  top-[3.5rem] shadow-[white] rounded-md !z-[99999]`}
           >
             {users.length > 0 ? (
               users.map((data, i) => (

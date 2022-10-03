@@ -1,12 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 const Icon = ({ data }) => {
+  const { data: session } = useSession();
   const router = useRouter();
-  const { menu} = router.query;
-  const active = !menu&&data?.name.toLowerCase()=="home"?true: menu == data?.name.toLowerCase() ?true:false
+  const route = router.route.split("/")[1];
+  const active = route == data?.name.toLowerCase();
+  const path = data.path == "profile" ? `${data.path}/${session?.user?.id}` : data.patch;
   return (
-    <Link href={`/?menu=${data?.name.toLowerCase()}`}>
+    <Link href={`/${path}`}>
       <div
         className={`${!data.important && "hidden"} ${
           active && "bg-zinc-900"
