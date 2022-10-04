@@ -26,9 +26,7 @@ const handleQueryUser = createAsyncThunk("user/query-users", async (query) => {
 
 const handleGetProfile = createAsyncThunk("user/get-profile", async (id) => {
   try {
-    console.log("id masok: ", id)
     const res = await fetch(`/api/users/${id}`).then((res) => res.json());
-    console.log("res: ",res)
     return {
       profile: res,
     };

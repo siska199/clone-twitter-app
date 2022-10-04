@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useCallback, useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,16 +7,15 @@ import { handleQueryUser } from "../redux/features/userSlice";
 const Search = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const router = useRouter();
   const users = useSelector((state) => state.user.value.users);
-  // const [activeSearch, setActiveSearch] = useState(false)
   const handleSearch = () => {
     dispatch(handleQueryUser(inputRef.current.value));
   };
-  const handleChooseUser = (e,id)=>{
-    e.stopPropagation()
-    
-  }
-  console.log("ref: ", inputRef.current?.value )
+  const handleChooseUser = (e, id) => {
+    e.stopPropagation();
+    router.push(`/profile/${id}`);
+  };
   return (
     <nav className="sticky top-0">
       <div className="h-[4rem] px-10 py-2 bg-black flex justify-center items-center relative">
@@ -31,12 +31,14 @@ const Search = () => {
           <div
             className={`bg-black w-full overflow-y-scroll display flex-col ${
               users.length < 0 ? "max-h-[7rem]" : "max-h-[20rem]"
-            } ${inputRef.current?.value?"!flex":"hidden"} shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] absolute  top-[3.5rem] shadow-[white] rounded-md !z-[99999]`}
+            } ${
+              inputRef.current?.value ? "!flex" : "hidden"
+            } shadow-[rgba(50,_50,_105,_0.15)_0px_2px_5px_0px,_rgba(0,_0,_0,_0.05)_0px_1px_1px_0px] absolute  top-[3.5rem] shadow-[white] rounded-md !z-[99999]`}
           >
             {users.length > 0 ? (
               users.map((data, i) => (
                 <div
-                  onClick={(e)=>handleChooseUser(e,data._id)}
+                  onClick={(e) => handleChooseUser(e, data._id)}
                   key={i}
                   className="flex py-2 px-4 items-center gap-2 hover:bg-slate-600 cursor-pointer"
                 >

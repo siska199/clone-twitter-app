@@ -5,7 +5,14 @@ export default async function handler(req, res) {
   dbConnect();
   const { body, method } = req;
   const { _id } = req.query;
-
+  if (method == "GET") {
+    try {
+      const userData = await users.findOne({ _id });
+      res.status(200).json(userData);
+    } catch (error) {
+      res.status(500).send(error);
+    }
+  }
   if (method == "PUT") {
     try {
       const userUpdate = await users.findOneAndUpdate({ _id }, body);

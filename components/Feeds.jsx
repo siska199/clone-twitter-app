@@ -22,21 +22,21 @@ const Feeds = () => {
     if (postRef.current) observer.observe(postRef.current);
 
     return () => {
-      observer.disconnect(postRef?.current);
+      postRef?.current && observer.disconnect();
     };
-  }, [postRef?.current, hasMore]);
+  }, [posts]);
 
   const handleIntersection = async (entries) => {
+    console.log("test: is intersectiong", entries[0].isIntersecting);
     if (entries[0].isIntersecting && hasMore) {
-      dispatch(handleGetPosts());
+      dispatch(handleGetPosts({ skip: true }));
     }
   };
 
   useEffect(() => {
-    console.log("fetch posts")
-    dispatch(handleGetPosts());
+    dispatch(handleGetPosts({ skip: true }));
   }, []);
-
+  console.log("post: ", posts);
   return (
     <>
       <nav className="px-4 flex h-[4rem] items-center justify-between top-0 sticky bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm">
@@ -54,14 +54,13 @@ const Feeds = () => {
         <BsStars size="1.5rem" />
       </nav>
       <AddData type="post" />
-      {posts[0] &&
-        posts.map((data, i) => {
-          return posts.length - 1 == i ? (
-            <Post ref={postRef} key={i} data={data} />
-          ) : (
-            <Post key={i} data={data} />
-          );
-        })}
+      {posts?.map((data, i) => {
+        return posts.length - 1 == i ? (
+          <Post ref={postRef} key={i} data={data} />
+        ) : (
+          <Post key={i} data={data} />
+        );
+      })}
     </>
   );
 };

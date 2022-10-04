@@ -1,6 +1,7 @@
 import posts from "../../../model/posts";
 import dbConnect from "../../../lib/dbConnect";
 import { getToken } from "next-auth/jwt";
+import { ObjectId } from "mongodb";
 
 const secret = process.env.JWT_SECRET;
 export default async function handler(req, res) {
@@ -9,19 +10,27 @@ export default async function handler(req, res) {
   const {
     method,
     body,
-    query: { page, skip },
+    query: { page, skip, idUser, loves, comments },
   } = req;
   if (method == "GET") {
     try {
+      const skipState = skip ? JSON.parse(skip) : false;
       const limit = 5;
+      const filter = {
+        user: ObjectId(idUser),
+      };
+      if (loves) filter["likes.user"] = ObjectId(idUser);
+      if (comments) filter["comments.user"] = ObjectId(idUser);
+
       const data = await posts
-        .find()
+        .find(idUser && filter)
         .populate("user")
         .sort("-createdAt")
-        .skip(JSON.parse(skip) ? (page - 1) * limit : 0)
-        .limit(JSON.parse(skip)?limit:false)
+        .skip(skipState ? (page - 1) * limit : 0)
+        .limit(skipState ? limit : false)
         .lean()
         .exec();
+
       const totalData = await posts.countDocuments();
       const modifiedData = data.map((post) => {
         return {
@@ -31,13 +40,18 @@ export default async function handler(req, res) {
             : "",
         };
       });
+
       res.status(200).json({
         data: modifiedData,
-        hasMore:JSON.parse(skip)?  totalData >= page * limit ? true : false : false,
+        hasMore: skipState
+          ? totalData >= page * limit
+            ? true
+            : false
+          : false,
         page: Number(page) + 1,
       });
     } catch (error) {
-      console.log("error: ", error)
+      console.log(error);
       res.status(500).send(`${error}`);
     }
   }

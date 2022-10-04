@@ -64,16 +64,17 @@ const handleAddComment = createAsyncThunk(
 );
 const handleGetPosts = createAsyncThunk(
   "posts/GetPosts",
-  async (skip = true, { getState }) => {
+  async (queries, { getState }) => {
     try {
       const page = getState().post.value.page;
-      const posts = await fetch(`/api/posts?page=${page}&&skip=${skip}`).then(
-        (data) => data.json()
+      const queryPath = queries.idUser
+        ? `idUser=${queries.idUser}&&loves=${queries.loves}&&comments=${queries.comments}`
+        : `page=${page}&&skip=${queries.skip}`;
+      const posts = await fetch(`/api/posts?${queryPath}`).then((data) =>
+        data.json()
       );
-      console.log("posts: ", posts);
       return posts;
     } catch (error) {
-      console.log("error :", error);
       return error;
     }
   }
@@ -148,9 +149,9 @@ const postSlice = createSlice({
     [handleGetPosts.fulfilled]: (state, action) => {
       state.value.loading = false;
       state.value.posts =
-        action.payload.page == 2
-          ? action.payload.data
-          : [...state.value.posts, ...action.payload.data];
+        state.value.posts.length > 0
+          ? [...state.value.posts, ...action.payload.data]
+          : action.payload.data;
       state.value.hasMore = action.payload.hasMore;
       state.value.page = action.payload.page;
     },

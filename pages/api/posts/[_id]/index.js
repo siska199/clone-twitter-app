@@ -8,8 +8,8 @@ export default async function handler(req, res) {
 
   if (method == "GET") {
     try {
-      const getUser = await posts.findOne({ _id });
-      res.status(200).json(getUser);
+      const getPost = await posts.findOne({ _id });
+      res.status(200).json(getPost);
     } catch (error) {
       res.status(500).send(error);
     }
@@ -24,8 +24,8 @@ export default async function handler(req, res) {
   }
   if (method == "DELETE") {
     try {
-      const deletePost = await posts.deleteOne({_id})
-      req.status(200).json(deletePost)
+      const deletePost = await posts.deleteOne({ _id });
+      req.status(200).json(deletePost);
     } catch (error) {
       res.status(500).send(error);
     }

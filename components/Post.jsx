@@ -9,7 +9,7 @@ import { VscSync } from "react-icons/vsc";
 import { BsHeart } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   handleGetComments,
   handleGetPosts,
@@ -58,7 +58,7 @@ const Post = React.forwardRef(({ data }, ref) => {
           })
         ).then(async () => {
           dispatch(handleResetPosts());
-          dispatch(handleGetPosts(false));
+          dispatch(handleGetPosts({ skip: false }));
         });
         break;
       case "comment":
@@ -77,12 +77,15 @@ const Post = React.forwardRef(({ data }, ref) => {
     setModalComment((prev) => {
       if (prev) {
         dispatch(handleResetPosts());
-        dispatch(handleGetPosts());
+        dispatch(handleGetPosts({ skip: true }));
       }
       return !modalComment;
     });
   };
-
+  if (ref) {
+    console.log("ref masuk: ", ref);
+    console.log("data: ", data);
+  }
   return (
     <section
       ref={ref}

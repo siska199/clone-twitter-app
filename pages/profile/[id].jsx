@@ -1,33 +1,49 @@
-import React, { useEffect } from "react";
 import Layout from "../../layout/Layout";
 import Navbar from "../../components/Navbar";
-import { useSession } from "next-auth/react";
+import Post from "../../components/Post";
 import { BsCalendar3 } from "react-icons/bs";
 import { dataMenuProfile } from "../../lib/data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetProfile } from "../../redux/features/userSlice";
+import {
+  handleGetPosts,
+  handleResetPosts,
+} from "../../redux/features/postSlice";
 
-const profile = () => {
+const profile = ({ profile }) => {
+  const posts = useSelector((state) => state.post.value.posts);
   const dispatch = useDispatch();
-  const router = useRouter();
-  console.log("router: ", router);
-  const id = router.query.id;
-  const profile = useSelector((state) => state.user.value.profile);
   const [activeMenu, setActiveMenu] = useState("tweets");
-
   const bgGray =
     "https://www.solidbackgrounds.com/images/1920x1080/1920x1080-dark-gray-solid-color-background.jpg";
-  const image =
-    "https://i.pinimg.com/564x/a7/c4/6f/a7c46f84d7ff21478632fb80b41826bd.jpg";
+  const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
-    console.log("get id: ", id);
-    dispatch(handleGetProfile(id));
+    id && dispatch(handleGetPosts({ idUser: id }));
   }, []);
 
-  console.log("profile: ", profile);
+  const handleSetActive = async (name) => {
+    setActiveMenu(name);
+    dispatch(handleResetPosts());
+    switch (name) {
+      case "tweets":
+        dispatch(handleGetPosts({ idUser: id }));
+        break;
+      case "tweets & replies":
+        dispatch(handleGetPosts({ idUser: id, comments: true }));
+        break;
+      case "media":
+        break;
+      case "likes":
+        dispatch(handleGetPosts({ idUser: id, likes: true }));
+        break;
+      case "":
+        break;
+    }
+  };
+
   return (
     <Layout title={"profile"} customeStyle={"flex"}>
       <>
@@ -37,12 +53,12 @@ const profile = () => {
 
           <div className="absolute rounded-full -bottom-[9rem] left-[1rem] ">
             <img
-              src={image}
+              src={profile.image}
               alt=""
               className="w-[9rem] border-[0.5rem] border-black  h-[9rem] rounded-full"
             />
-            <h1 className="font-bold text-[1.2rem]">Siska Apriana Rifianti</h1>
-            <p className="text">@SiskaRifianti</p>
+            <h1 className="font-bold text-[1.2rem]">{profile.name}</h1>
+            <p className="text">@{profile.username}</p>
             <p className="text my-2 flex gap-2 items-center">
               <BsCalendar3 /> Joined May 2022
             </p>
@@ -66,7 +82,7 @@ const profile = () => {
               {dataMenuProfile.map((data, i) => (
                 <li
                   key={i}
-                  onClick={() => setActiveMenu(data.name.toLocaleLowerCase())}
+                  onClick={() => handleSetActive(data.name.toLocaleLowerCase())}
                   className={`${
                     activeMenu === data.name.toLocaleLowerCase() &&
                     "bg-zinc-900"
@@ -77,7 +93,11 @@ const profile = () => {
               ))}
             </ul>
           </nav>
-          <div></div>
+          <div>
+            {posts.map((data, i) => (
+              <Post data={data} key={i} />
+            ))}
+          </div>
         </section>
       </>
     </Layout>
@@ -85,3 +105,16 @@ const profile = () => {
 };
 
 export default profile;
+
+export const getServerSideProps = async (ctx) => {
+  const { id } = ctx.query;
+  const profile = await fetch(`http://localhost:3000/api/users/${id}`).then(
+    (res) => res.json()
+  );
+
+  return {
+    props: {
+      profile,
+    },
+  };
+};
