@@ -67,9 +67,10 @@ const handleGetPosts = createAsyncThunk(
   async (queries, { getState }) => {
     try {
       const page = getState().post.value.page;
-      const queryPath = queries.idUser
-        ? `idUser=${queries.idUser}&&loves=${queries.loves}&&comments=${queries.comments}`
-        : `page=${page}&&skip=${queries.skip}`;
+      let queryPath = queries.idUser ? "" : `page=${page}&&`;
+      Object.keys(queries).map((data) => {
+        queryPath = queryPath + `${data}=${queries[data]}&&`;
+      });
       const posts = await fetch(`/api/posts?${queryPath}`).then((data) =>
         data.json()
       );
@@ -149,9 +150,10 @@ const postSlice = createSlice({
     [handleGetPosts.fulfilled]: (state, action) => {
       state.value.loading = false;
       state.value.posts =
+      action.payload.page==2 ? action.payload.data :
         state.value.posts.length > 0
           ? [...state.value.posts, ...action.payload.data]
-          : action.payload.data;
+          :action.payload.data 
       state.value.hasMore = action.payload.hasMore;
       state.value.page = action.payload.page;
     },

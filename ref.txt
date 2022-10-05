@@ -1,0 +1,2 @@
+Custome credentials: 
+https://dev.to/twisha/using-credentials-provider-with-a-custom-backend-in-nextauth-js-43k4s

@@ -82,10 +82,6 @@ const Post = React.forwardRef(({ data }, ref) => {
       return !modalComment;
     });
   };
-  if (ref) {
-    console.log("ref masuk: ", ref);
-    console.log("data: ", data);
-  }
   return (
     <section
       ref={ref}

@@ -15,18 +15,21 @@ export default async function handler(req, res) {
   if (method == "GET") {
     try {
       const skipState = skip ? JSON.parse(skip) : false;
+      const pageState = page ? JSON.parse(page) : 1;
+      const lovesState = loves ? JSON.parse(loves) : false;
+      const commentsState = comments ? JSON.parse(comments) : false;
       const limit = 5;
       const filter = {
         user: ObjectId(idUser),
       };
-      if (loves) filter["likes.user"] = ObjectId(idUser);
-      if (comments) filter["comments.user"] = ObjectId(idUser);
+      if (lovesState) filter["likes.user"] = ObjectId(idUser);
+      if (commentsState) filter["comments.user"] = ObjectId(idUser);
 
       const data = await posts
         .find(idUser && filter)
         .populate("user")
         .sort("-createdAt")
-        .skip(skipState ? (page - 1) * limit : 0)
+        .skip(skipState ? (pageState - 1) * limit : 0)
         .limit(skipState ? limit : false)
         .lean()
         .exec();
@@ -40,15 +43,14 @@ export default async function handler(req, res) {
             : "",
         };
       });
-
       res.status(200).json({
         data: modifiedData,
         hasMore: skipState
-          ? totalData >= page * limit
+          ? totalData >= pageState * limit
             ? true
             : false
           : false,
-        page: Number(page) + 1,
+        page: pageState + 1,
       });
     } catch (error) {
       console.log(error);

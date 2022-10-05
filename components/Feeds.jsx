@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef,  } from "react";
 import { BsStars } from "react-icons/bs";
 import AddData from "./AddData";
 import Post from "./Post";
 import { useDispatch, useSelector } from "react-redux";
-import { handleGetPosts, handleResetPosts } from "../redux/features/postSlice";
+import { handleGetPosts,  } from "../redux/features/postSlice";
 import { useSession, signOut } from "next-auth/react";
 
 const Feeds = () => {
@@ -27,7 +27,6 @@ const Feeds = () => {
   }, [posts]);
 
   const handleIntersection = async (entries) => {
-    console.log("test: is intersectiong", entries[0].isIntersecting);
     if (entries[0].isIntersecting && hasMore) {
       dispatch(handleGetPosts({ skip: true }));
     }
@@ -36,7 +35,6 @@ const Feeds = () => {
   useEffect(() => {
     dispatch(handleGetPosts({ skip: true }));
   }, []);
-  console.log("post: ", posts);
   return (
     <>
       <nav className="px-4 flex h-[4rem] items-center justify-between top-0 sticky bg-black bg-opacity-30 backdrop-filter backdrop-blur-sm">

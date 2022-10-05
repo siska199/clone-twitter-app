@@ -19,10 +19,6 @@ const userSchema = new Schema({
   password: {
     type: String,
   },
-  role: {
-    type: String,
-    default: "user",
-  },
   image: {
     type: String,
     required: true,

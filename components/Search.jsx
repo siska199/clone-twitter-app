@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { handleResetPosts } from "../redux/features/postSlice";
 import { handleQueryUser } from "../redux/features/userSlice";
 
 const Search = () => {
@@ -14,8 +15,11 @@ const Search = () => {
   };
   const handleChooseUser = (e, id) => {
     e.stopPropagation();
+    dispatch(handleResetPosts());
     router.push(`/profile/${id}`);
+    inputRef.current.value = "";
   };
+  
   return (
     <nav className="sticky top-0">
       <div className="h-[4rem] px-10 py-2 bg-black flex justify-center items-center relative">

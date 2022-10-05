@@ -21,8 +21,9 @@ const profile = ({ profile }) => {
   const { id } = router.query;
 
   useEffect(() => {
+    setActiveMenu("tweets");
     id && dispatch(handleGetPosts({ idUser: id }));
-  }, []);
+  }, [id]);
 
   const handleSetActive = async (name) => {
     setActiveMenu(name);
@@ -37,7 +38,7 @@ const profile = ({ profile }) => {
       case "media":
         break;
       case "likes":
-        dispatch(handleGetPosts({ idUser: id, likes: true }));
+        dispatch(handleGetPosts({ idUser: id, loves: true }));
         break;
       case "":
         break;
@@ -94,7 +95,7 @@ const profile = ({ profile }) => {
             </ul>
           </nav>
           <div>
-            {posts.map((data, i) => (
+            {posts?.map((data, i) => (
               <Post data={data} key={i} />
             ))}
           </div>

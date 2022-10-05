@@ -9,17 +9,19 @@ const initialState = {
   },
 };
 
-let cancelToken;
+let controller;
 const handleQueryUser = createAsyncThunk("user/query-users", async (query) => {
   try {
-    if (cancelToken) cancelToken.cancel();
+    if (controller) controller.abort();
 
-    cancelToken = axios.CancelToken.source();
-    const res = await axios.get(`/api/users?q=${query}`, {
-      cancelToken: cancelToken.token,
-    });
+    controller = new AbortController();
+    const { signal } = controller;
+    const res = await fetch(`/api/users?q=${query}`, {
+      signal,
+    }).then((res) => res.json());
+
     return {
-      users: res.data,
+      users: res,
     };
   } catch (error) {}
 });
