@@ -1,25 +1,40 @@
 import { useRouter } from "next/router";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { handleResetPosts } from "../redux/features/postSlice";
 import { handleQueryUser } from "../redux/features/userSlice";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
   const router = useRouter();
-  const users = useSelector((state) => state.user.value.users);
-  const handleSearch = () => {
-    dispatch(handleQueryUser(inputRef.current.value));
+  const [users, setUsers] = useState([]);
+  const controllerAbort = useRef(null);
+  const inputRef = useRef(null);
+
+  const handleOnSearch = (e) => {
+    if (controllerAbort.current) {
+      controllerAbort.current.abort();
+    }
+    const controller = new AbortController();
+    const { signal } = controller;
+    controllerAbort.current = controller;
+    handleQueryUser(signal);
+    fetch(`/api/users?q=${e.target.value}`, {
+      signal,
+    })
+      .then((res) => res.json())
+      .then((res) => setUsers(res))
+      .catch((error) => error);
   };
+
   const handleChooseUser = (e, id) => {
     e.stopPropagation();
     dispatch(handleResetPosts());
     router.push(`/profile/${id}`);
     inputRef.current.value = "";
   };
-  
+
   return (
     <nav className="sticky top-0">
       <div className="h-[4rem] px-10 py-2 bg-black flex justify-center items-center relative">
@@ -29,7 +44,7 @@ const Search = () => {
             type="text"
             className="w-full bg-transparent outline-none peer "
             placeholder="Search"
-            onChange={() => handleSearch()}
+            onChange={(e) => handleOnSearch(e)}
           />
           <BsSearch className="cursor-pointer peer-focus:text-blue-500 text-orange text-[1.3rem] " />
           <div

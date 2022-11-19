@@ -2,7 +2,9 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
-import { handleRenderPosts } from "../redux/features/postSlice";
+import {
+  handleResetPosts,
+} from "../redux/features/postSlice";
 const Icon = ({ data }) => {
   const { data: session } = useSession();
   const dispatch = useDispatch();
@@ -12,8 +14,8 @@ const Icon = ({ data }) => {
   const path =
     data.path == "profile" ? `${data.path}/${session?.user?.id}` : data.path;
   const handleNavigateMenu = () => {
+    dispatch(handleResetPosts());
     router.push(`/${path}`);
-    dispatch(handleRenderPosts());
   };
   return (
     <div
