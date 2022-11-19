@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { iconInputs } from "../lib/data";
 import { BiWorld } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
@@ -65,7 +65,7 @@ const AddData = ({ type, idPost }) => {
     });
   };
   const handleOnSubmit = async (e) => {
-    e.preventDefault();
+    e && e.preventDefault();
     switch (type) {
       case "post":
         dispatch(handleAddPost(form)).then(() => {
@@ -87,6 +87,13 @@ const AddData = ({ type, idPost }) => {
         return "";
     }
   };
+  const handleSubmitByPressEnter = (e) => {
+    if (e.key == "Enter") {
+      e.preventDefault();
+      handleOnSubmit();
+    }
+  };
+  useEffect(() => {}, []);
 
   return (
     <form
@@ -106,6 +113,7 @@ const AddData = ({ type, idPost }) => {
           } border-gray-500 pb-4`}
         >
           <textarea
+            onKeyDown={handleSubmitByPressEnter}
             name="tweet"
             placeholder={`${
               type == "post" ? "What's happening?" : "Tweet your reply"

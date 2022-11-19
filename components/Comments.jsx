@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Modal from "../layout/Modal";
 import AddData from "./AddData";
 import UserInfo from "./UserInfo";
-import {
-  handleClearComments,
-} from "../redux/features/postSlice";
+import { handleClearComments } from "../redux/features/postSlice";
 import { useDispatch, useSelector } from "react-redux";
+import LoadingData from "./LoadingData";
 
 const Comments = ({ dataPost, handleModalComment }) => {
   const dispatch = useDispatch();
@@ -17,6 +16,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
       dispatch(handleClearComments());
     };
   }, []);
+
   return (
     <Modal
       handleCloseModal={handleModalComment}
@@ -32,7 +32,7 @@ const Comments = ({ dataPost, handleModalComment }) => {
           <UserInfo data={dataPost} />
         </div>
 
-        {comments?.length>0 && 
+        {comments.length > 0 &&
           comments.map((comment, i) => (
             <div key={i} className="">
               <UserInfo data={comment} />
