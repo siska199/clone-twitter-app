@@ -48,7 +48,7 @@ const AuthPage = ({ providers }) => {
             Join Twitter Today
           </h5>
           <div className="flex flex-col space-y-3 text-black w-[60%] lg:w-[40%]  text-sm ">
-            <button
+            {/* <button
               onClick={(e) => handleSignUp(e)}
               className="bg-sky-600 rounded-3xl py-[0.5rem] font-medium text-white hover:bg-sky-500"
             >
@@ -56,7 +56,7 @@ const AuthPage = ({ providers }) => {
             </button>
             <div className="text-center">
               <p className="line relative text-white ">OR</p>
-            </div>
+            </div> */}
             {Object.values(providers).map((provider) => (
               <button
                 onClick={(e) => handleSignUp(e, provider.id)}
@@ -67,14 +67,14 @@ const AuthPage = ({ providers }) => {
                 Sign Up with {provider.name}
               </button>
             ))}
-            <p className="text-gray-400 text-[0.6rem] leading-3">
+            {/* <p className="text-gray-400 text-[0.6rem] leading-3">
               By signing up, you agree to the{" "}
               <span className="text-sky-400"> Terms of Service</span> and{" "}
               <span className="text-sky-400">Privacy Policy,</span>{" "}
               <span className="text-sky-400">including Cookie Use</span>.
-            </p>
+            </p> */}
           </div>
-          <div className="flex flex-col w-[60%] lg:w-[40%] mt-[3rem]">
+          {/* <div className="flex flex-col w-[60%] lg:w-[40%] mt-[3rem]">
             <h5 className="font-medium mb-3 text-medium">
               Already have account
             </h5>
@@ -84,7 +84,7 @@ const AuthPage = ({ providers }) => {
             >
               Sign In
             </button>
-          </div>
+          </div> */}
         </form>
       </section>
       {modalSignUp && <SignUp />}
