@@ -64,7 +64,7 @@ const AuthPage = ({ providers }) => {
                 className="bg-gray-200 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
               >
                 <FcGoogle className="mr-3" />
-                Sign Up with {provider.name}
+                Sign Up / Sign In with {provider.name}
               </button>
             ))}
             {/* <p className="text-gray-400 text-[0.6rem] leading-3">
