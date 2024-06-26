@@ -47,7 +47,7 @@ const AuthPage = ({ providers }) => {
           <h5 className="font-bold text-[1.7rem] mb-4 tracking-[0.15rem]">
             Join Twitter Today
           </h5>
-          <div className="flex flex-col space-y-3 text-black w-[60%] lg:w-[40%]  text-sm ">
+          <div className="flex flex-col space-y-3 text-black w-[60%] lg:w-full  text-sm ">
             {/* <button
               onClick={(e) => handleSignUp(e)}
               className="bg-sky-600 rounded-3xl py-[0.5rem] font-medium text-white hover:bg-sky-500"
@@ -61,7 +61,7 @@ const AuthPage = ({ providers }) => {
               <button
                 onClick={(e) => handleSignUp(e, provider.id)}
                 key={provider.name}
-                className="bg-gray-200 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
+                className="bg-gray-200 w-fit px-4 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
               >
                 <FcGoogle className="mr-3" />
                 Sign Up / Sign In with {provider.name}
