@@ -27,7 +27,7 @@ const AuthPage = ({ providers }) => {
   };
 
   return (
-    <Layout title="login" customeStyle="grid grid-cols-2">
+    <Layout title="login" customeStyle="grid md:grid-cols-2">
       <section className="hidden md:block ">
         <div className="h-full flex">
           <img
@@ -38,9 +38,9 @@ const AuthPage = ({ providers }) => {
         </div>
       </section>
 
-      <section className="w-full col-span-2 md:col-span-1 p-8 space-y-[3rem]">
+      <section className=" px-[2rem] w-full h-full flex flex-col justify-center items-center">
         <BsTwitter size="2rem" />
-        <h1 className="font-bold text-[3.3rem] tracking-wider">
+        <h1 className="font-bold text-[3.3rem] text-center tracking-wider">
           Happening now
         </h1>
         <form action="" className=" flex flex-col items-center md:items-start">
@@ -61,10 +61,10 @@ const AuthPage = ({ providers }) => {
               <button
                 onClick={(e) => handleSignUp(e, provider.id)}
                 key={provider.name}
-                className="bg-gray-200 w-fit px-4 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
+                className="bg-gray-200 flex flex-col mx-auto w-fit px-4 rounded-3xl py-[0.5rem] flex justify-center items-center font-medium hover:bg-gray-300"
               >
                 <FcGoogle className="mr-3" />
-                Sign Up / Sign In with {provider.name}
+                Sign In with {provider.name}
               </button>
             ))}
             {/* <p className="text-gray-400 text-[0.6rem] leading-3">
@@ -87,8 +87,8 @@ const AuthPage = ({ providers }) => {
           </div> */}
         </form>
       </section>
-      {modalSignUp && <SignUp />}
-      {modalSignIn && <SignIn providers={providers} />}
+      {/* {modalSignUp && <SignUp />}
+      {modalSignIn && <SignIn providers={providers} />} */}
     </Layout>
   );
 };
